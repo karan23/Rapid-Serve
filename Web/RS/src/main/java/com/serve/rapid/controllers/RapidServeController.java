@@ -1,5 +1,6 @@
 package com.serve.rapid.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.serve.rapid.data.custom.ComplaintPojo;
 import com.serve.rapid.domain.Complaint;
 import com.serve.rapid.domain.Customer;
 import com.serve.rapid.domain.FieldAgent;
@@ -74,13 +76,22 @@ public class RapidServeController {
 	}
 
 	@RequestMapping(value = "/getAllComplaintByAgentId/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody List<Complaint> getAllComplaintByAgentId(@PathVariable String id,
+	public @ResponseBody List<ComplaintPojo> getAllComplaintByAgentId(@PathVariable String id,
 			ModelMap model) {
 		long custId = Long.parseLong(id);
 		FieldAgent cust = fieldAgentRepository.findOne(custId);
 		List<Complaint> complaints = complaintRepository.findByAgent(cust);
+		List<ComplaintPojo> result = new ArrayList<ComplaintPojo>();
+		for (Complaint complaint : complaints) {
+			ComplaintPojo cPojo = new ComplaintPojo();
+			Customer customer = customerRepository.findOne(complaint.getCustomer().getId());
+			cPojo.setComplaint(complaint);
+			cPojo.setLatitude(customer.getLatitude());
+			cPojo.setLongitude(customer.getLongitude());
+			result.add(cPojo);
+		}
 		
-		return complaints;
+		return result;
 	}
 	
 }
