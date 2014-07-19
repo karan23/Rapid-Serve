@@ -1,0 +1,52 @@
+<!-- COMPOSE MESSAGE MODAL -->
+<div class="modal fade" id="addcomplaint-modal" tabindex="-1"
+	role="dialog" aria-hidden="true"
+	ng-init="">
+	<div class="modal-dialog">
+		>
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				
+                                    <h3 class="box-title">Create Complaint</h3>
+
+			</div>
+
+			<div class="modal-body">
+				<!-- general form elements -->
+				<section class="hbox stretch">
+						<div class="box box-danger">
+                               <div class="box-body">
+                                    <form role="form">
+                                    <div class="box-body">
+                                       
+                                       <!-- textarea -->
+                                        <div class="form-group">
+                                            <label>Complaint</label>
+                                            <textarea class="form-control" rows="3" placeholder="Enter Complaint" ng-model="complaint.complaintText"></textarea>
+                                        </div>
+                                        
+                                    </div><!-- /.box-body -->
+
+                                    <div class="box-footer">
+                                        <button type="submit" class="btn btn-primary" ng-click="saveComplaint();" data-dismiss="modal">Submit</button>
+                                    </div>
+                                </form>
+                                </div><!-- /.box-body -->
+                            </div><!-- /.box -->
+				
+
+				</section>
+			</div>
+		</div>
+	
+
+	</div>
+	</div>
+<script>
+$(document).ready(function(){
+	$("[data-mask]").inputmask();
+})
+</script>
+

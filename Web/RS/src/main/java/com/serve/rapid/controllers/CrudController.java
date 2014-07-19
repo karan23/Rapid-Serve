@@ -1,5 +1,6 @@
 package com.serve.rapid.controllers;
 
+import java.util.Date;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +43,10 @@ public class CrudController {
 	private CommentRepository commentRepository;
 
 	@RequestMapping(value = "/addCustomer", method = RequestMethod.POST, produces = "application/json")
-		public @ResponseBody Customer addCustomer(@RequestBody Customer customer,
+		public @ResponseBody Iterable<Customer> addCustomer(@RequestBody Customer customer,
 				ModelMap model) {
-		return customerRepository.save(customer);
+		 customerRepository.save(customer);
+		 return customerRepository.findAll();
 	}
 
 	@RequestMapping(value = "/addFieldAgent", method = RequestMethod.POST, produces = "application/json")
@@ -71,6 +73,10 @@ public class CrudController {
 	@RequestMapping(value = "/addComplaint", method = RequestMethod.POST, produces = "application/json")
 		public @ResponseBody Complaint addComplaint(@RequestBody Complaint complaint,
 				ModelMap model) {
+		Date creationTime = new Date();
+		complaint.setComplaintTime(creationTime);
+		complaint.setStatus(Constants.COMP_CREATED);
+		complaint.setSatisfiedText(Integer.toString(gen()));
 		return complaintRepository.save(complaint);
 	}
 
@@ -79,6 +85,11 @@ public class CrudController {
 				ModelMap model) {
 		return commentRepository.save(comment);
 	}
+	
+	@RequestMapping(value = "/getAllCustomers", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody Iterable<Customer> getAllCustomers() {
+	return customerRepository.findAll();
+}
 	public int gen() {
 	    Random r = new Random( System.currentTimeMillis() );
 	    return 10000 + r.nextInt(20000);
