@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import com.example.rapidserve.MainActivity.AppSectionsPagerAdapter;
 import com.rapidserve.user.R;
 
 public class SubmitFragment extends Fragment {
