@@ -14,10 +14,12 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import com.rapidserve.user.R;
 
 public class LoginActivity extends Activity {
 	private EditText mCustomerIdText, mPhoneText;
@@ -53,6 +55,7 @@ public class LoginActivity extends Activity {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				Log.d("TAG", json.toString());
 				makeRequest(mUri, mStringEntity);
 			}
 			

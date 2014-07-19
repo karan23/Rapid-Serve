@@ -26,7 +26,7 @@ public class BeanConfiguration {
 	@Bean
 	public DataSource dataSource() {
 		BasicDataSource ds = new org.apache.commons.dbcp.BasicDataSource();
-		ds.setDriverClassName("com.mysql.jdbc.Driver");
+		ds.setDriverClassName(env.getProperty("driverName"));
 		ds.setUrl(env.getProperty("dbUrl"));
 		ds.setUsername(env.getProperty("dbUser"));
 		ds.setPassword(env.getProperty("dbPass"));
