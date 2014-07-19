@@ -7,51 +7,54 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Comment {
 
- @Id
- @GeneratedValue(strategy = GenerationType.AUTO)
- private long id;
- 
- @JoinColumn(name = "complaint_id")
- @ManyToOne
- private Complaint complaint;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
 
- private String userType;
- 
- private String text;
+	@JoinColumn(name = "complaint_id")
+	@ManyToOne
+	private Complaint complaint;
 
- public long getId() {
-  return id;
- }
+	private String userType;
 
- public void setId(long id) {
-  this.id = id;
- }
+	private String text;
 
- public Complaint getComplaint() {
-  return complaint;
- }
+	public long getId() {
+		return id;
+	}
 
- public void setComplaint(Complaint complaint) {
-  this.complaint = complaint;
- }
+	public void setId(long id) {
+		this.id = id;
+	}
 
- public String getUserType() {
-  return userType;
- }
+	@JsonIgnore
+	public Complaint getComplaint() {
+		return complaint;
+	}
 
- public void setUserType(String userType) {
-  this.userType = userType;
- }
+	public void setComplaint(Complaint complaint) {
+		this.complaint = complaint;
+	}
 
- public String getText() {
-  return text;
- }
+	public String getUserType() {
+		return userType;
+	}
 
- public void setText(String text) {
-  this.text = text;
- }
- 
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
 }

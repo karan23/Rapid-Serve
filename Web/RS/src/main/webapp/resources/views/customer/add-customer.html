@@ -1,0 +1,70 @@
+<!-- COMPOSE MESSAGE MODAL -->
+<div class="modal fade" id="addcust-modal" tabindex="-1"
+	role="dialog" aria-hidden="true"
+	ng-init="">
+	<div class="modal-dialog">
+		>
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				
+                                    <h3 class="box-title">Create Customer</h3>
+
+			</div>
+
+			<div class="modal-body">
+				<!-- general form elements -->
+				<section class="hbox stretch">
+						<div class="box box-danger">
+                               <div class="box-body">
+                                    <form role="form">
+                                    <div class="box-body">
+                                        <div class="form-group">
+                                            <label for="faName">Customer Name:</label>
+                                            <input type="text" class="form-control" id="faName" placeholder="Enter Name" ng-model="cust.contactName">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="faEmail">Customer Email:</label>
+                                            <input type="text" class="form-control" id="faEmail" placeholder="Enter Email" ng-model="cust.contactEmail">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="faSTB">Customer STB ID:</label>
+                                            <input type="text" class="form-control" id="faSTB" placeholder="Enter STB ID" ng-model="cust.stbId" data-inputmask='"mask": "999-999-999-999"' data-mask>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="faContact">Customer Contact:</label>
+                                            <input type="text" class="form-control" id="faContact" placeholder="Enter Contact" ng-model="cust.contactNumber" data-inputmask='"mask": "(999)999-9999"' data-mask/>
+                                        </div>
+                                       <!-- textarea -->
+                                        <div class="form-group">
+                                            <label>Address</label>
+                                            <textarea class="form-control" rows="3" placeholder="Enter Address" ng-model="cust.address"></textarea>
+                                        </div>
+                                        
+                                    </div><!-- /.box-body -->
+
+                                    <div class="box-footer">
+                                        <button type="submit" class="btn btn-primary" ng-click="addCust();" data-dismiss="modal">Submit</button>
+                                    </div>
+                                </form>
+                                </div><!-- /.box-body -->
+                            </div><!-- /.box -->
+				
+
+				</section>
+			</div>
+		</div>
+	
+
+	</div>
+	</div>
+<script>
+$(document).ready(function(){
+	$("[data-mask]").inputmask();
+})
+</script>
+

@@ -88,7 +88,21 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		@Override
 		public android.support.v4.app.Fragment getItem(int arg0) {
 			// TODO Auto-generated method stub
-			Fragment fragment = new OpenComplaints();
+			Fragment fragment = null ;
+			switch (arg0) {
+			case 0:
+				 fragment = new OpenComplaints();
+				break;
+			case 1:
+				 fragment = new ClosedComplaints();
+				break;
+			case 2:
+				 fragment = new Reports();
+				break;
+
+			default:
+				break;
+			}
 
 			return fragment;
 		}

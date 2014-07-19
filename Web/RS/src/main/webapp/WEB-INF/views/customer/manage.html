@@ -1,4 +1,4 @@
-<div class="box box-solid" ng-init="getAgents();">
+<div class="box box-solid" ng-init="getCustomers();">
                                 <div class="box-body">
                                     <div class="row">
                                         <div class="col-md-3 col-sm-4">
@@ -6,21 +6,11 @@
                                                  This is an example of having the box header within the box body -->
                                             <div class="box-header">
                                                 <i class="fa fa-inbox"></i>
-                                                <h3 class="box-title">Field Agents</h3>
+                                                <h3 class="box-title">Customers</h3>
                                             </div>
                                             <!-- compose message btn -->
-                                            <a class="btn btn-block btn-primary" data-toggle="modal" data-target="#addfa-modal"><i class="fa fa-pencil"></i> Create Field Agent</a>
-                                            <!-- Navigation - folders-->
-                                            <div style="margin-top: 15px;">
-                                                <ul class="nav nav-pills nav-stacked">
-                                                    <li class="header">Folders</li>
-                                                    <li class="active"><a href="#"><i class="fa fa-inbox"></i> Zone A</a></li>
-                                                    <li><a href="#"><i class="fa fa-inbox"></i> Zone B</a></li>
-                                                    <li><a href="#"><i class="fa fa-inbox"></i> Zone C</a></li>
-                                                    <li><a href="#"><i class="fa fa-inbox"></i> Zone D</a></li>
-                                                    <li><a href="#"><i class="fa fa-inbox"></i> Zone E</a></li>
-                                                </ul>
-                                            </div>
+                                            <a class="btn btn-block btn-primary" data-toggle="modal" data-target="#addcust-modal"><i class="fa fa-pencil"></i> Create Customer</a>
+                                          
                                         </div><!-- /.col (LEFT) -->
                                         <div class="col-md-9 col-sm-8">
                                             <div class="row pad">
@@ -44,14 +34,17 @@
                                                 <!-- THE MESSAGES -->
                                                 <table class="table table-mailbox">
                                                 	<tr>
-                                                		<th>Agent ID</th>
                                                 		<th>Name</th>
-                                                		<th>Contact No.</th>
+                                                		<th>Address</th>
+                                                		<th>Contact</th>
+                                                		<th>STB-ID</th>
                                                 	</tr>
-                                                    <tr ng-repeat="agent in agentList">
-                                                   		 <td class="name"><a href="">{{agent.faid}}</a></td>
-                                                       <td class="name"><a href="">{{agent.name}}</a></td>
-                                                        <td class="subject"><a href="tel:{{agent.contactNumber}}">{{agent.contactNumber}}</a></td>
+                                                    <tr ng-repeat="cust in custList">
+                                                   		 <td class="name"><a href="">{{cust.contactName}}</a></td>
+                                                       <td class="name"><a href="">{{cust.address}}</a></td>
+                                                        <td class="subject"><a href="tel:{{agent.contactNumber}}">{{cust.contactNumber}}</a></td>
+                                                        <td class="name"><a href="">{{cust.stbId}}</a></td>
+                                                        
                                                        
                                                     </tr>
                                                     
@@ -67,4 +60,4 @@
                                     </div>
                                 </div><!-- box-footer -->
                             </div><!-- /.box -->
-                            <div ng-include="'resources/views/fa/add-fa.html'"></div>
+                            <div ng-include="'resources/views/customer/add-customer.html'"></div>

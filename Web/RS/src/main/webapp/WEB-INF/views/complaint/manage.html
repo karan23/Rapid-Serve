@@ -1,4 +1,4 @@
-<div class="box box-solid" ng-init="getAgents();">
+<div class="box box-solid" ng-init="getComplaints();">
                                 <div class="box-body">
                                     <div class="row">
                                         <div class="col-md-3 col-sm-4">
@@ -6,10 +6,10 @@
                                                  This is an example of having the box header within the box body -->
                                             <div class="box-header">
                                                 <i class="fa fa-inbox"></i>
-                                                <h3 class="box-title">Field Agents</h3>
+                                                <h3 class="box-title">Manage Complaint</h3>
                                             </div>
                                             <!-- compose message btn -->
-                                            <a class="btn btn-block btn-primary" data-toggle="modal" data-target="#addfa-modal"><i class="fa fa-pencil"></i> Create Field Agent</a>
+                                            <a class="btn btn-block btn-primary" data-toggle="modal" data-target="#addcomplaint-modal"><i class="fa fa-pencil"></i> Create Complaint</a>
                                             <!-- Navigation - folders-->
                                             <div style="margin-top: 15px;">
                                                 <ul class="nav nav-pills nav-stacked">
@@ -67,4 +67,4 @@
                                     </div>
                                 </div><!-- box-footer -->
                             </div><!-- /.box -->
-                            <div ng-include="'resources/views/fa/add-fa.html'"></div>
+                            <div ng-include="'resources/views/complaint/add-complaint.html'"></div>
