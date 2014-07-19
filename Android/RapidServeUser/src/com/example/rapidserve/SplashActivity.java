@@ -21,7 +21,7 @@ public class SplashActivity extends Activity {
 	    new Handler().postDelayed(new Runnable(){ 
 	    	public void run() {
 	    		if(Utils.isLogged(SplashActivity.this)) {
-	    			mStartIntent = new Intent(SplashActivity.this, LoginActivity.class); 
+	    			mStartIntent = new Intent(SplashActivity.this, MainActivity.class); 
 	    		}
 	    		else {
 	    			mStartIntent = new Intent(SplashActivity.this, LoginActivity.class); 
