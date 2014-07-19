@@ -22,14 +22,14 @@ public class SplashActivity extends Activity {
 			public void run() {
 
 				Intent intent;
-				if (!utils.isLogged(SplashActivity.this)) {
+				//if (!utils.isLogged(SplashActivity.this)) {
 					intent = new Intent(SplashActivity.this,
 							LoginActivity.class);
 
-				} else {
-					intent = new Intent(SplashActivity.this, MainActivity.class);
-
-				}
+//				} else {
+//					intent = new Intent(SplashActivity.this, MainActivity.class);
+//
+//				}
 
 				startActivity(intent);
 				overridePendingTransition(R.anim.activity_open_translate,
