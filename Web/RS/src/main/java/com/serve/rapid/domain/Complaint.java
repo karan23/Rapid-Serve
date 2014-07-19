@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Complaint {
 
@@ -40,7 +42,8 @@ public class Complaint {
 	private String status;
 	private String satisfiedText;
 	private String satisfied;
-
+	
+	@JsonIgnore
 	public Customer getCustomer() {
 		return customer;
 	}
@@ -64,7 +67,8 @@ public class Complaint {
 	public void setId(long id) {
 		this.id = id;
 	}
-
+	
+	@JsonIgnore
 	public FieldAgent getAgent() {
 		return agent;
 	}
