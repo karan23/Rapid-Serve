@@ -1,38 +1,43 @@
 package com.example.rapidserve;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
+import android.os.SystemClock;
 
 public class SplashActivity extends Activity {
 
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
+
 		setContentView(R.layout.splashscreen);
+
 		
 		// Send a message in 3.5 sec to start Home Page
-	    new Handler().postDelayed(new Runnable(){ 
-	    	public void run() {
-	    		Intent iLogin = new Intent(SplashActivity.this,LoginActivity.class); 
-	    		startActivity(iLogin);
-	    		finish();
-	    		//handler.sendEmptyMessage(0);
-	        } 
-	    }, 3500);
-		
+		new Handler().postDelayed(new Runnable() {
+			public void run() {
+
+				Intent intent;
+				//if (!utils.isLoggedin(SplashActivity.this)) {
+					intent = new Intent(SplashActivity.this,
+							LoginActivity.class);
+					startActivity(intent);
+					overridePendingTransition(R.anim.activity_open_translate,
+							R.anim.activity_close_scale);
+//				} else {
+//					intent = new Intent(SplashActivity.this, MainActivity.class);
+//
+//				}
+				finish();
+				// handler.sendEmptyMessage(0);
+			}
+		}, 3500);
+
 	}
-	
-	/*private Handler handler = new Handler() { 
-        @Override
-        public void handleMessage(Message msg) {
-        	
-        	Intent 
-        }
-	};*/
+
 }

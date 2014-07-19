@@ -32,9 +32,9 @@
         android:id="@+id/editText1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="10"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
+        android:layout_weight="10"
         android:inputType="number" >
     </EditText>
 
@@ -42,12 +42,13 @@
         android:id="@+id/button1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
-        android:layout_weight="10"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="10"
         android:background="#FF0000"
-        android:textColor="#FFFFFF"
-        android:text="Submit" />
+        android:text="Submit"
+        android:textColor="#FFFFFF" />
+
 
 </LinearLayout>
