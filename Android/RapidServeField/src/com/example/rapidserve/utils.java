@@ -1,13 +1,18 @@
 package com.example.rapidserve;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.telephony.TelephonyManager;
 
 public class utils {
 
+	final static String APP_URL =  "http://192.168.1.242:8080/rapid-serve/endpoint/";
+	
 	public static boolean isLogged(Context context) {
-
+		
 		boolean checkedLogin = false;
 		String val = utils.getAppParam(context, "Login");
 
@@ -63,4 +68,20 @@ public class utils {
 		return uuid;
 	}
 
+	
+	public static String parseName(String resp) {
+		
+		String Name = "";
+		
+		try {
+			JSONObject jsonObject = new JSONObject(resp);
+			Name = jsonObject.getString("name");
+			
+		} catch (JSONException e) {
+            e.printStackTrace();
+            Name = "";
+        }
+		
+		return Name;
+	}
 }
