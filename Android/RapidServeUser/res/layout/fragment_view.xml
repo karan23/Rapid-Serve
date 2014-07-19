@@ -3,6 +3,7 @@
     android:id="@+id/list_apps"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:choiceMode="singleChoice" >
+    android:choiceMode="singleChoice"
+    android:background="@drawable/activity_background" >
 
 </ListView>
