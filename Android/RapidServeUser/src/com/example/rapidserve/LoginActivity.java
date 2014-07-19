@@ -20,16 +20,15 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class LoginActivity extends Activity {
-	private EditText mUsernameText, mPhoneText;
+	private EditText mCustomerIdText, mPhoneText;
 	private Button mLoginButton;
-	private String mUsername, mPhone, mUri;
-	private JSONObject mJSONObject;
+	private String mCustomerId, mPhone, mUri;
 	private StringEntity mStringEntity;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		mUsernameText = (EditText) findViewById(R.id.usernameText);
+		mCustomerIdText = (EditText) findViewById(R.id.customerIdText);
 		mPhoneText = (EditText) findViewById(R.id.phoneText);
 		mLoginButton = (Button) findViewById(R.id.loginButton);
 		
@@ -37,11 +36,11 @@ public class LoginActivity extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				mUsername = mUsernameText.getText().toString();
+				mCustomerId = mCustomerIdText.getText().toString();
 				mPhone = mPhoneText.getText().toString();
 				JSONObject json = new JSONObject();
 				try {
-	                json.put("username", mUsername);
+	                json.put("customer_id", mCustomerId);
 	                json.put("phone", mPhone);
 
 	            } catch (JSONException e) {
