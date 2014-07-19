@@ -26,7 +26,7 @@ public class FieldAgent {
 	
 	private String type;
 	
-	
+	private String address;
 	
 	@OneToMany(mappedBy="agent", cascade = CascadeType.REMOVE)
 	@LazyCollection(LazyCollectionOption.FALSE)
@@ -92,6 +92,30 @@ public class FieldAgent {
 
 	public void setLocations(Collection<FieldAgentLocation> locations) {
 		this.locations = locations;
+	}
+
+
+
+	public String getAddress() {
+		return address;
+	}
+
+
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+
+
+	public Collection<Complaint> getComplaints() {
+		return complaints;
+	}
+
+
+
+	public void setComplaints(Collection<Complaint> complaints) {
+		this.complaints = complaints;
 	}
 	
 	
