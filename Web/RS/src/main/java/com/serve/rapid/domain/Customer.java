@@ -29,7 +29,16 @@ public class Customer {
 	private String contactEmail;
 	private String longitude;
 	private String latitude;
+	public String getStbId() {
+		return stbId;
+	}
 
+	public void setStbId(String stbId) {
+		this.stbId = stbId;
+	}
+
+	private String stbId;
+	
 	public Collection<Complaint> getComplaints() {
 		return complaints;
 	}

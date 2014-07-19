@@ -6,13 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
-@RequestMapping("/fa")
-public class FieldController {
+@RequestMapping("/complaint")
+public class ComplaintController {
 
 	@RequestMapping("/manage")
 	public String getRootPage(ModelMap modelMap) {
-		return "fa/manage";
+		return "complaint/manage";
 	}
-	
-
 }

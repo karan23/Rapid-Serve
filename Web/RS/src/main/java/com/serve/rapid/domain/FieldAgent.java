@@ -22,6 +22,8 @@ public class FieldAgent {
 	
 	private String name;
 	
+	private String FAID;
+	
 	private String contactNumber;
 	
 	private String type;
@@ -116,6 +118,18 @@ public class FieldAgent {
 
 	public void setComplaints(Collection<Complaint> complaints) {
 		this.complaints = complaints;
+	}
+
+
+
+	public String getFAID() {
+		return FAID;
+	}
+
+
+
+	public void setFAID(String fAID) {
+		FAID = fAID;
 	}
 	
 	

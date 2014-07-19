@@ -27,7 +27,7 @@
                                         
                                         <div class="form-group">
                                             <label for="faContact">Field Agent Contact:</label>
-                                            <input type="text" class="form-control" id="faContact" placeholder="Enter Contact" ng-model="fa.contactNumber">
+                                            <input type="text" class="form-control" id="faContact" placeholder="Enter Contact" ng-model="fa.contactNumber" data-inputmask='"mask": "(999) 999-9999"' data-mask/>
                                         </div>
                                        <!-- textarea -->
                                         <div class="form-group">
@@ -52,5 +52,9 @@
 
 	</div>
 	</div>
-
+<script>
+$(document).ready(function(){
+	$("[data-mask]").inputmask();
+})
+</script>
 
