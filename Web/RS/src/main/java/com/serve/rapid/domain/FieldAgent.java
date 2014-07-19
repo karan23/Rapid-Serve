@@ -32,7 +32,9 @@ public class FieldAgent {
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private Collection<FieldAgentLocation> locations;
 
-
+	@OneToMany(mappedBy="agent", cascade = CascadeType.REMOVE)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private Collection<Complaint> complaints;
 
 	public long getId() {
 		return id;
