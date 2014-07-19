@@ -4,5 +4,6 @@
     <string name="app_name">RapidServe User</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_login">Login</string>
+    <string name="sharedpref">prefs</string>
 
 </resources>
