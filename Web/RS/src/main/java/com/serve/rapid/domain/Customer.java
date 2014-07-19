@@ -27,6 +27,8 @@ public class Customer {
 	private String address;
 	private String contactNumber;
 	private String contactEmail;
+	private String longitude;
+	private String latitude;
 
 	public Collection<Complaint> getComplaints() {
 		return complaints;
@@ -74,5 +76,21 @@ public class Customer {
 
 	public void setContactName(String contactName) {
 		this.contactName = contactName;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
 	}
 }

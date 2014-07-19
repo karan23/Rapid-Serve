@@ -38,8 +38,6 @@ public class Complaint {
 	private Date complaintTime;
 	private Date lastUpdated;
 	private String status;
-	private String longitude;
-	private String latitude;
 	private String satisfiedText;
 	private String satisfied;
 
@@ -105,22 +103,6 @@ public class Complaint {
 
 	public void setStatus(String status) {
 		this.status = status;
-	}
-
-	public String getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(String longitude) {
-		this.longitude = longitude;
-	}
-
-	public String getLatitude() {
-		return latitude;
-	}
-
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
 	}
 
 	public String getSatisfiedText() {
