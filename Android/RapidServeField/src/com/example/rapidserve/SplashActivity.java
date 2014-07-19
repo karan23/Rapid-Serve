@@ -21,6 +21,8 @@ public class SplashActivity extends Activity {
 	    	public void run() {
 	    		Intent iLogin = new Intent(SplashActivity.this,LoginActivity.class); 
 	    		startActivity(iLogin);
+	    		overridePendingTransition(R.anim.activity_open_translate,R.anim.activity_close_scale);
+
 	    		finish();
 	    		//handler.sendEmptyMessage(0);
 	        } 
