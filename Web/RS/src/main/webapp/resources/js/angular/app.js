@@ -2,8 +2,7 @@
 
 var AngularSpringApp = {};
 
-var App = angular.module('AngularSpringApp', [ 'ngRoute',
-		'AngularSpringApp.filters', 'AngularSpringApp.directives', 'ngAnimate',
+var App = angular.module('AngularSpringApp', [ 'ngRoute', 'ngAnimate',
 		'toaster']);
 
 // Declare app level module which depends on filters, and services
