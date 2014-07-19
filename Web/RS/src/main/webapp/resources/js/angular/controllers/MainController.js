@@ -12,13 +12,13 @@ var MainCtrl = function($scope, toaster, $location,
 	
 	$scope.saveFA = function(){
 		console.log($scope.fa);
-		var responsePromise = $http.post("fa/addFieldAgent", $scope.fa);
+		var responsePromise = $http.post("crud/addFieldAgent", $scope.fa);
 
         responsePromise.success(function(data, status, headers, config) {
-            $scope.myData.fromServer = data.title;
+        	toaster.pop('success', "success", "Field Agent Added.");
         });
         responsePromise.error(function(data, status, headers, config) {
-            alert("AJAX failed!");
+        	toaster.pop('error', "error", "Some error in Saving Field Agent.");
         });
 	};
 	
