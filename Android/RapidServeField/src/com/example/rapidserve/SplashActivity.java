@@ -17,22 +17,23 @@ public class SplashActivity extends Activity {
 
 		setContentView(R.layout.splashscreen);
 
-		
 		// Send a message in 3.5 sec to start Home Page
 		new Handler().postDelayed(new Runnable() {
 			public void run() {
 
 				Intent intent;
-				//if (!utils.isLoggedin(SplashActivity.this)) {
+				if (!utils.isLogged(SplashActivity.this)) {
 					intent = new Intent(SplashActivity.this,
 							LoginActivity.class);
-					startActivity(intent);
-					overridePendingTransition(R.anim.activity_open_translate,
-							R.anim.activity_close_scale);
-//				} else {
-//					intent = new Intent(SplashActivity.this, MainActivity.class);
-//
-//				}
+
+				} else {
+					intent = new Intent(SplashActivity.this, MainActivity.class);
+
+				}
+
+				startActivity(intent);
+				overridePendingTransition(R.anim.activity_open_translate,
+						R.anim.activity_close_scale);
 				finish();
 				// handler.sendEmptyMessage(0);
 			}
