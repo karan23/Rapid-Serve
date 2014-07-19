@@ -2,6 +2,7 @@ package com.example.rapidserve;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.telephony.TelephonyManager;
 
 public class utils {
 
@@ -22,7 +23,7 @@ public class utils {
 
 		return checkedLogin;
 	}
-	
+
 	/**
 	 * Sets a value pair in persistent memory
 	 * 
@@ -45,6 +46,21 @@ public class utils {
 				ctxt.getString(R.string.sharedpref), 0);
 
 		return settings.getString(param, null);
+	}
+
+	/**
+	 * Returns an user ID. For GAAF project this has a prefix.
+	 * 
+	 * @param ctxt
+	 * @return
+	 */
+	static String getUuid(Context ctxt) {
+		String uuid = null;
+
+		uuid = ((TelephonyManager) ctxt
+				.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
+
+		return uuid;
 	}
 
 }
