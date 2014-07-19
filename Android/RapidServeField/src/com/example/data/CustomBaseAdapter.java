@@ -56,7 +56,7 @@ public class CustomBaseAdapter extends BaseAdapter {
 		LayoutInflater mInflater = (LayoutInflater) context
 				.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		if (convertView == null) {
-			convertView = mInflater.inflate(R.layout.deal_menu, null);
+			convertView = mInflater.inflate(R.layout.opencomplaintslistrow, null);
 		}
 
 		return convertView;
