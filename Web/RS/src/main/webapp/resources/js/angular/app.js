@@ -12,6 +12,10 @@ App.config([ '$routeProvider', function($routeProvider) {
 		templateUrl : 'dashboard/layout'
 	});
 	
+	$routeProvider.when('/fa/manage', {
+		templateUrl : 'fa/manage'
+	});
+	
 	$routeProvider.otherwise({
 		redirectTo : '/dashboard'
 	});

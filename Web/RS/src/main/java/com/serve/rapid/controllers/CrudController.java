@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.serve.rapid.Constants;
 import com.serve.rapid.domain.Comment;
 import com.serve.rapid.domain.Complaint;
 import com.serve.rapid.domain.Customer;
@@ -47,6 +48,7 @@ public class CrudController {
 	@RequestMapping(value = "/addFieldAgent", method = RequestMethod.POST, produces = "application/json")
 		public @ResponseBody FieldAgent addFieldAgent(@RequestBody FieldAgent fieldAgent,
 				ModelMap model) {
+		fieldAgent.setType(Constants.UT_FIELDAGENT);
 		return fieldAgentRepository.save(fieldAgent);
 	}
 
