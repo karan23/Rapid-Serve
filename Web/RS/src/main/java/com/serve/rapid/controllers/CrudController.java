@@ -1,7 +1,9 @@
 package com.serve.rapid.controllers;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.serve.rapid.Constants;
@@ -43,36 +46,34 @@ public class CrudController {
 	private CommentRepository commentRepository;
 
 	@RequestMapping(value = "/addCustomer", method = RequestMethod.POST, produces = "application/json")
-		public @ResponseBody Iterable<Customer> addCustomer(@RequestBody Customer customer,
-				ModelMap model) {
-		 customerRepository.save(customer);
-		 return customerRepository.findAll();
+	public @ResponseBody Customer addCustomer(@RequestBody Customer customer,
+			ModelMap model) {
+		return customerRepository.save(customer);
 	}
 
 	@RequestMapping(value = "/addFieldAgent", method = RequestMethod.POST, produces = "application/json")
-		public @ResponseBody Iterable<FieldAgent> addFieldAgent(@RequestBody FieldAgent fieldAgent,
-				ModelMap model) {
+	public @ResponseBody Iterable<FieldAgent> addFieldAgent(
+			@RequestBody FieldAgent fieldAgent, ModelMap model) {
 		fieldAgent.setType(Constants.UT_FIELDAGENT);
-		fieldAgent.setFAID("FA"+gen());
+		fieldAgent.setFAID("FA" + gen());
 		fieldAgentRepository.save(fieldAgent);
 		return fieldAgentRepository.findAll();
 	}
 
-	
 	@RequestMapping(value = "/getAllFieldAgent", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody Iterable<FieldAgent> getAllFieldAgent() {
-	return fieldAgentRepository.findAll();
-}
-	
+		return fieldAgentRepository.findAll();
+	}
+
 	@RequestMapping(value = "/addFieldAgentLocation", method = RequestMethod.POST, produces = "application/json")
-		public @ResponseBody FieldAgentLocation addFieldAgentLocation(@RequestBody FieldAgentLocation fieldAgentLocation,
-				ModelMap model) {
+	public @ResponseBody FieldAgentLocation addFieldAgentLocation(
+			@RequestBody FieldAgentLocation fieldAgentLocation, ModelMap model) {
 		return fieldAgentLocationRepository.save(fieldAgentLocation);
 	}
 
 	@RequestMapping(value = "/addComplaint", method = RequestMethod.POST, produces = "application/json")
-		public @ResponseBody Complaint addComplaint(@RequestBody Complaint complaint,
-				ModelMap model) {
+	public @ResponseBody Complaint addComplaint(
+			@RequestBody Complaint complaint, ModelMap model) {
 		Date creationTime = new Date();
 		complaint.setComplaintTime(creationTime);
 		complaint.setStatus(Constants.COMP_CREATED);
@@ -81,17 +82,13 @@ public class CrudController {
 	}
 
 	@RequestMapping(value = "/addComment", method = RequestMethod.POST, produces = "application/json")
-		public @ResponseBody Comment addComment(@RequestBody Comment comment,
-				ModelMap model) {
+	public @ResponseBody Comment addComment(@RequestBody Comment comment,
+			ModelMap model) {
 		return commentRepository.save(comment);
 	}
-	
-	@RequestMapping(value = "/getAllCustomers", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody Iterable<Customer> getAllCustomers() {
-	return customerRepository.findAll();
-}
+
 	public int gen() {
-	    Random r = new Random( System.currentTimeMillis() );
-	    return 10000 + r.nextInt(20000);
+		Random r = new Random(System.currentTimeMillis());
+		return 10000 + r.nextInt(20000);
 	}
 }

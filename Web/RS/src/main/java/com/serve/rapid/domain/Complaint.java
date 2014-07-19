@@ -37,6 +37,7 @@ public class Complaint {
 	private Collection<Comment> comments;
 
 	private String complaintText;
+	private String complaintType;
 	private Date complaintTime;
 	private Date lastUpdated;
 	private String status;
@@ -123,6 +124,14 @@ public class Complaint {
 
 	public void setSatisfied(String satisfied) {
 		this.satisfied = satisfied;
+	}
+
+	public String getComplaintType() {
+		return complaintType;
+	}
+
+	public void setComplaintType(String complaintType) {
+		this.complaintType = complaintType;
 	}
 
 }

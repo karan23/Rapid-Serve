@@ -1,8 +1,10 @@
 package com.serve.rapid.controllers;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.serve.rapid.Constants;
 import com.serve.rapid.data.custom.ComplaintPojo;
 import com.serve.rapid.domain.Complaint;
 import com.serve.rapid.domain.Customer;
@@ -92,6 +95,28 @@ public class RapidServeController {
 		}
 		
 		return result;
+	}
+
+	@RequestMapping(value = "/addComplaint", method = RequestMethod.POST, produces = "application/json")
+		public @ResponseBody Iterable<Complaint> addComplaint(@RequestParam Map<String, String> params,
+				ModelMap model) {
+		String complaintText = params.get("complaintText");
+		String complaintType = params.get("complaintType");
+		Customer customer = customerRepository.findOne(Long.parseLong(params.get("customerId")));
+		Date complaintTime = new Date();
+		
+		Complaint complaint = new Complaint();
+		complaint.setComplaintText(complaintText);
+		complaint.setComplaintType(complaintType);
+		complaint.setComplaintTime(complaintTime);
+		complaint.setCustomer(customer);
+		complaint.setStatus(Constants.COMP_CREATED);
+		Random r = new Random( System.currentTimeMillis() );
+		String satisfiedText =  Integer.toString(10000 + r.nextInt(20000));
+		complaint.setSatisfiedText(satisfiedText);
+		
+		complaintRepository.save(complaint);
+		return complaintRepository.findAll();
 	}
 	
 }
