@@ -16,6 +16,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,13 +25,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.rapidserve.RestClient.RequestMethod;
 import com.rapidserve.user.R;
 
 public class LoginActivity extends Activity {
 	private EditText mCustomerIdText, mPhoneText;
 	private Button mLoginButton;
 	private String mCustomerId, mPhone;
-	private StringEntity mStringEntity;
+	private JSONObject mJObj;
 	private Context mContext;
 
 	@Override
@@ -41,34 +43,14 @@ public class LoginActivity extends Activity {
 		mCustomerIdText = (EditText) findViewById(R.id.customerIdText);
 		mPhoneText = (EditText) findViewById(R.id.phoneText);
 		mLoginButton = (Button) findViewById(R.id.loginButton);
-
 		mLoginButton.setOnClickListener(new Button.OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 				mCustomerId = mCustomerIdText.getText().toString();
 				mPhone = mPhoneText.getText().toString();
-				JSONObject json = new JSONObject();
-				try {
-					json.put("customer_id", mCustomerId);
-					json.put("phone", mPhone);
-
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				try {
-					mStringEntity = new StringEntity(json.toString());
-				} catch (UnsupportedEncodingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Log.d("TAG", json.toString());
-				//new HttpRequestTask().execute();
-				Intent intent = new Intent(mContext, MainActivity.class);
-				mContext.startActivity(intent);				
+				new HttpRequestTask().execute();
 			}
-
 		});
 
 	}
@@ -80,36 +62,39 @@ public class LoginActivity extends Activity {
 		return true;
 	}
 
-	public class HttpRequestTask extends AsyncTask<Void, Void, HttpResponse> {
+	public class HttpRequestTask extends AsyncTask<Void, Void, String> {
 		ProgressDialog progressDialog = ProgressDialog.show(mContext,
 				"Authenticating", "Please wait..");
 
 		@Override
-		protected HttpResponse doInBackground(Void... params) {
-
+		protected String doInBackground(Void... params) {
+			String loginUrl = Utils.WEB_URL + "findUserById?id=" + mCustomerId + "&contactNumber=" + mPhone ;
+			RestClient httpClient = new RestClient(loginUrl);
 			try {
-				HttpClient client = new DefaultHttpClient();
-				HttpPost httpPost = new HttpPost(Utils.LOGIN_URL);
-				httpPost.setEntity(mStringEntity);
-				httpPost.setHeader("Accept", "application/json");
-				httpPost.setHeader("Content-type", "application/json");
-				return client.execute(httpPost);
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			} catch (ClientProtocolException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
+				httpClient.Execute(RequestMethod.GET);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return null;
+			Log.d("TAG",  httpClient.getResponse());
+			return httpClient.getResponse();
 		}
 		
 		protected void onPreExecute() {
 			progressDialog.show();
 		}
-		protected void postExecute(HttpResponse result) {
-			progressDialog.hide();
-			
+		protected void onPostExecute(String result) {
+			progressDialog.cancel();
+			if(result == null || result.length() == 0) {
+				Utils.showToast(mContext, "Wrong credidentials!");
+			}
+			else {
+				Utils.setAppParam(mContext, "customerId", mCustomerId);
+				Utils.setAppParam(mContext, "customerPhone", mPhone);
+				Utils.setAppParam(mContext, "login", "true");
+				Intent intent = new Intent(mContext, MainActivity.class);
+				mContext.startActivity(intent);	
+			}
 		}
 	}
 }
