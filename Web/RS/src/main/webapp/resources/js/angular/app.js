@@ -18,6 +18,9 @@ App.config([ '$routeProvider', function($routeProvider) {
 	
 	$routeProvider.when('/customer/manage', {
 		templateUrl : 'customer/manage'
+	});	
+	$routeProvider.when('/complaint/manage', {
+		templateUrl : 'complaint/manage'
 	});
 	
 	$routeProvider.otherwise({
