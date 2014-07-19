@@ -1,5 +1,7 @@
 package com.serve.rapid.controllers;
 
+import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -46,12 +48,20 @@ public class CrudController {
 	}
 
 	@RequestMapping(value = "/addFieldAgent", method = RequestMethod.POST, produces = "application/json")
-		public @ResponseBody FieldAgent addFieldAgent(@RequestBody FieldAgent fieldAgent,
+		public @ResponseBody Iterable<FieldAgent> addFieldAgent(@RequestBody FieldAgent fieldAgent,
 				ModelMap model) {
 		fieldAgent.setType(Constants.UT_FIELDAGENT);
-		return fieldAgentRepository.save(fieldAgent);
+		fieldAgent.setFAID("FA"+gen());
+		fieldAgentRepository.save(fieldAgent);
+		return fieldAgentRepository.findAll();
 	}
 
+	
+	@RequestMapping(value = "/getAllFieldAgent", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody Iterable<FieldAgent> getAllFieldAgent() {
+	return fieldAgentRepository.findAll();
+}
+	
 	@RequestMapping(value = "/addFieldAgentLocation", method = RequestMethod.POST, produces = "application/json")
 		public @ResponseBody FieldAgentLocation addFieldAgentLocation(@RequestBody FieldAgentLocation fieldAgentLocation,
 				ModelMap model) {
@@ -68,5 +78,9 @@ public class CrudController {
 		public @ResponseBody Comment addComment(@RequestBody Comment comment,
 				ModelMap model) {
 		return commentRepository.save(comment);
+	}
+	public int gen() {
+	    Random r = new Random( System.currentTimeMillis() );
+	    return 10000 + r.nextInt(20000);
 	}
 }
