@@ -4,12 +4,12 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class Complaints {
 
-int id ;
-String type;
-String detail;
-String userName;
-String Adress ;
-LatLng latlng ;
-long phoneNumber ;
-
+public int id ;
+public String type;
+public String detail;
+public String userName;
+public String Adress ;
+public LatLng latlng ;
+public long phoneNumber ;
+public long distance ;
 }
