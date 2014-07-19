@@ -86,8 +86,8 @@ public class RapidServeController {
 			ComplaintPojo cPojo = new ComplaintPojo();
 			Customer customer = customerRepository.findOne(complaint.getCustomer().getId());
 			cPojo.setComplaint(complaint);
-			cPojo.setLatitude(customer.getLatitude());
-			cPojo.setLongitude(customer.getLongitude());
+			customer.setComplaints(null);
+			cPojo.setCustomer(customer);
 			result.add(cPojo);
 		}
 		
