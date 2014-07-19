@@ -1,13 +1,21 @@
 package com.serve.rapid.domain;
 
+import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+@Entity
 public class Complaint {
 
 	@Id
@@ -17,6 +25,10 @@ public class Complaint {
 	@JoinColumn(name = "agent_id")
     @ManyToOne
     private FieldAgent agent;
+	
+	@OneToMany(mappedBy="complaint", cascade = CascadeType.REMOVE)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private Collection<Comment> comments;
 	
 	private String complaintText;
 	private Date complaintTime;
