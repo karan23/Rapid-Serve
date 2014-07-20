@@ -11,4 +11,6 @@ public interface FieldAgentLocationRepository extends CrudRepository<FieldAgentL
 
 	List<FieldAgentLocation> findByAgentOrderBySeenDesc(FieldAgent agent);
 
+	List<FieldAgentLocation> findAllById(long parseLong);
+
 }

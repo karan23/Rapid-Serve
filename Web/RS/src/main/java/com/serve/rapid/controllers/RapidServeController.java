@@ -215,7 +215,7 @@ public class RapidServeController {
 			}*/
 			cPojo.setComplaint(complaint);
 			customer.setComplaints(null);
-			cPojo.setCustomer(customer);
+			//cPojo.setCustomer(customer);
 			result.add(cPojo);
 		}
 		return result;
