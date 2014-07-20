@@ -38,23 +38,21 @@ public class LoginActivity extends Activity {
 			public void onClick(View arg0) {
 				mCustomerId = mCustomerIdText.getText().toString();
 				mPhone = mPhoneText.getText().toString();
-				new HttpRequestTask().execute();
+				if(mCustomerId.length() !=0 && mPhone.length() !=0) {
+					new HttpRequestTask().execute();
+				}
+				else {
+					Utils.showToast(mContext, "Please enter Customer Id and contact number!!");
+				}
 			}
 		});
 
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.login, menu);
-		return true;
-	}
-
 	public class HttpRequestTask extends AsyncTask<Void, Void, String> {
 		ProgressDialog progressDialog = ProgressDialog.show(mContext,
 				"Authenticating", "Please wait..");
-
+		int responseCode;
 		@Override
 		protected String doInBackground(Void... params) {
 			String loginUrl = Utils.WEB_URL + "findUserById?id=" + mCustomerId + "&contactNumber=" + mPhone ;
@@ -66,6 +64,7 @@ public class LoginActivity extends Activity {
 				e.printStackTrace();
 			}
 			Log.d("TAG",  httpClient.getResponse());
+			responseCode = httpClient.getResponseCode();
 			return httpClient.getResponse();
 		}
 		
@@ -74,6 +73,7 @@ public class LoginActivity extends Activity {
 		}
 		protected void onPostExecute(String result) {
 			progressDialog.cancel();
+			Log.d("Tag", result);
 			if(result == null || result.length() == 0) {
 				Utils.showToast(mContext, "Wrong credidentials!");
 			}

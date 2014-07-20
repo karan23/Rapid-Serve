@@ -71,8 +71,12 @@ public class SubmitFragment extends Fragment implements OnClickListener {
 
 		case R.id.submitBtnFB:
 
-			
-			callPost();
+			if(AddComplaint.getText().toString().length() !=0 ) {
+				callPost();
+			}
+			else {
+				Utils.showToast(getActivity(), "Please enter you complaint!!");
+			}
 
 			break;
 
@@ -115,7 +119,7 @@ public class SubmitFragment extends Fragment implements OnClickListener {
 	Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
-		
+			AddComplaint.setText("");
 			((MainActivity)getActivity()).actionBar.setSelectedNavigationItem(1);
 			
 		}
