@@ -4,10 +4,12 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rapidserve.user.R;
@@ -53,13 +55,19 @@ public class CustomListAdapter extends BaseAdapter {
 
 		TextView txtTitle = (TextView) convertView
 				.findViewById(R.id.comaplaintTitile);
-		TextView txtStatus = (TextView) convertView
-				.findViewById(R.id.complaintStatus);
 		TextView txtDesc = (TextView) convertView
 				.findViewById(R.id.shortDesc);
+		ImageView progressView = (ImageView) convertView.findViewById(R.id.progressView);
 		txtTitle.setText(mComplaintList.get(position).complaintType);
-		txtStatus.setText(mComplaintList.get(position).status);
 		txtDesc.setText(mComplaintList.get(position).complaintText);
+		String status = mComplaintList.get(position).status;
+		if(status.equalsIgnoreCase("CMPLT")) {
+			progressView.setImageResource(R.drawable.completed);
+		}
+		else {
+			progressView.setImageResource(R.drawable.inprogress);
+		}
+
 		return convertView;
 	}
 

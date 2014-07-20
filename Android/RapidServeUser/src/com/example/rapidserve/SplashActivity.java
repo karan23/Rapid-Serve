@@ -20,7 +20,6 @@ public class SplashActivity extends Activity {
 		// Send a message in 3.5 sec to start Home Page
 	    new Handler().postDelayed(new Runnable(){ 
 	    	public void run() {
-	    		Utils.setAppParam(SplashActivity.this, "login", "false");
 	    		if(Utils.isLogged(SplashActivity.this)) {
 	    			mStartIntent = new Intent(SplashActivity.this, MainActivity.class); 
 	    		}
