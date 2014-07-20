@@ -38,32 +38,37 @@ public class ViewFragment extends Fragment {
 				false);
 		mListView = (ListView) rootView.findViewById(R.id.list_complaints);
 		mContext = getActivity();
-		Complaint complaint = new Complaint("","");
-		ArrayList<Complaint> array = new ArrayList<Complaint>();
-		array.add(complaint);
-		mListAdapter = new CustomListAdapter(mContext, array);
+		mComplaintList = new ArrayList<Complaint>();
+		mListAdapter = new CustomListAdapter(mContext, mComplaintList);
 		mListView.setAdapter(mListAdapter);
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position,
-					long id) {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
 				Intent intent = new Intent(mContext, ComplaintActivity.class);
-				intent.putExtra("type", mComplaintList.get(position).complaintType);
-				intent.putExtra("text", mComplaintList.get(position).complaintText);
+				intent.putExtra("type",
+						mComplaintList.get(position).complaintType);
+				intent.putExtra("text",
+						mComplaintList.get(position).complaintText);
 				intent.putExtra("status", mComplaintList.get(position).status);
+				intent.putExtra("code",
+						mComplaintList.get(position).satisfiedText);
 				startActivity(intent);
-			}});
+			}
+		});
 		return rootView;
 	}
-@Override
-public void onResume() {
-	// TODO Auto-generated method stub
-	super.onResume();
-	new HttpRequestTask().execute();
-}
+
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		new HttpRequestTask().execute();
+	}
+
 	public class HttpRequestTask extends AsyncTask<Void, Void, String> {
-		
+
 		@Override
 		protected String doInBackground(Void... params) {
 			String loginUrl = Utils.WEB_URL + "getAllComplaintByUserId/"
@@ -79,22 +84,19 @@ public void onResume() {
 		}
 
 		protected void onPreExecute() {
-			
+
 		}
 
 		protected void onPostExecute(String result) {
 			if ((result != null) && (result.length() > 0)) {
-
-				mComplaintList = parseJson(result);
+				parseJson(result);
 				mListAdapter.setList(mComplaintList);
 				mListAdapter.notifyDataSetChanged();
 			}
 		}
 	}
 
-	ArrayList<Complaint> parseJson(String result) {
-
-		ArrayList<Complaint> mArray = new ArrayList<Complaint>();
+	public void parseJson(String result) {
 
 		
 		try {
@@ -122,10 +124,9 @@ public void onResume() {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				mArray.add(complaint);
+				mComplaintList.add(complaint);
 			}
-			
+
 		}
-		return mArray;
 	}
 }
