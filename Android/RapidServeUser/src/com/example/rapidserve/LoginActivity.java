@@ -1,22 +1,11 @@
 package com.example.rapidserve;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -94,6 +83,7 @@ public class LoginActivity extends Activity {
 				Utils.setAppParam(mContext, "login", "true");
 				Intent intent = new Intent(mContext, MainActivity.class);
 				mContext.startActivity(intent);	
+				overridePendingTransition(R.anim.activity_open_translate,R.anim.activity_close_scale);
 			}
 		}
 	}

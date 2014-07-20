@@ -1,8 +1,14 @@
 package com.example.rapidserve;
 
+
 import android.app.ActionBar.Tab;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.graphics.Color;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -10,19 +16,23 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Window;
+import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 	AppSectionsPagerAdapter mAppSectionsPagerAdapter;
 	public ViewPager mViewPager;
 	protected ActionBar actionBar;// = getActionBar();
-
+	LocationListener mlocListener;
+	LocationManager mlocManager;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		setContentView(R.layout.activity_main);
 		mAppSectionsPagerAdapter = new AppSectionsPagerAdapter(getSupportFragmentManager());
-
+		mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		mlocListener = new MyLocationListener();
+		mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 600000, 500, mlocListener);
 		// Set up the action bar.
 		actionBar = getActionBar();
 
@@ -55,6 +65,18 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		actionBar.addTab(actionBar.newTab().setText("Reports").setTabListener(this));
 	}
 
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		mlocManager.removeUpdates(mlocListener);
+		super.onDestroy();
+	}
+	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		moveTaskToBack(true);
+	}
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 		// TODO Auto-generated method stub
@@ -109,4 +131,45 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 	}
 
+	
+	/* Class My Location Listener */
+
+	public class MyLocationListener implements LocationListener
+
+	{
+
+
+		@Override
+		public void onLocationChanged(Location loc)
+
+		{
+	
+		}
+
+		@Override
+		public void onProviderDisabled(String provider)
+
+		{
+
+			Toast.makeText(getApplicationContext(), "Gps Disabled", Toast.LENGTH_SHORT).show();
+
+		}
+
+		@Override
+		public void onProviderEnabled(String provider)
+
+		{
+
+			Toast.makeText(getApplicationContext(), "Gps Enabled", Toast.LENGTH_SHORT).show();
+
+		}
+
+		@Override
+		public void onStatusChanged(String provider, int status, Bundle extras)
+
+		{
+
+		}
+	}
+	
 }

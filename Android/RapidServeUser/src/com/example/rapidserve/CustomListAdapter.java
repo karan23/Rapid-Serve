@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.rapidserve.user.R;
 
+
 public class CustomListAdapter extends BaseAdapter {
 
 	private Context mContext;
