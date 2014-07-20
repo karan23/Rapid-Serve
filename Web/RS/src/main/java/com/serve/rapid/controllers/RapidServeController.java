@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -128,7 +129,38 @@ public class RapidServeController {
 		String satisfiedText = Integer.toString(10000 + r.nextInt(20000));
 		complaint.setSatisfiedText(satisfiedText);
 
-		complaintRepository.save(complaint);
+		Complaint compSaved = complaintRepository.save(complaint);
+		Customer customer11 = compSaved.getCustomer();
+		double custLong = Double.parseDouble(customer11.getLongitude());
+		double custLat = Double.parseDouble(customer11.getLatitude());
+		Map<FieldAgent, Double> distanceMap = new HashMap<FieldAgent, Double>();
+		for(FieldAgent agent : fieldAgentRepository.findAll()){
+			
+			List<FieldAgentLocation> locs = fieldAgentLocationRepository.findByAgentOrderBySeenDesc(agent);
+			if(locs.size()>0){
+				double distance = getDistance(custLat, custLong, Double.parseDouble(locs.get(0).getLatitude()), Double.parseDouble(locs.get(0).getLongitude()));
+				distanceMap.put(agent, distance);
+				
+			}
+			
+			System.out.println(distanceMap);
+		}
+		FieldAgent assigned = null;
+		// find minimum first
+		double min = Integer.MAX_VALUE;
+		for(Entry<FieldAgent, Double> distance : distanceMap.entrySet()) {
+		    min = Math.min(min, distance.getValue());
+		}
+		for(Entry<FieldAgent, Double> distance : distanceMap.entrySet()) {
+		    if(distance.getValue() == min) {
+		    	assigned = distance.getKey();
+		    }
+		}
+		if(assigned!=null){
+			System.out.println(assigned);
+			compSaved.setAgent(assigned);
+			complaintRepository.save(compSaved);
+		}
 		return complaintRepository.findAll();
 	}
 
@@ -220,5 +252,19 @@ public class RapidServeController {
 		}
 		return result;
 	}
+	public static double rad(double x) {
+		  return x * Math.PI / 180;
+		}
 
+		public static double getDistance(double p1lat, double p1long, double p2lat, double p2long) {
+			double R = 6378137; // Earth’s mean radius in meter
+			double dLat = rad(p2lat - p1lat);
+			double dLong = rad(p2long - p1long);
+			double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+		    Math.cos(rad(p1lat)) * Math.cos(rad(p2lat)) *
+		    Math.sin(dLong / 2) * Math.sin(dLong / 2);
+		  double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+		  double d = R * c;
+		  return d; // returns the distance in meter
+		};
 }
