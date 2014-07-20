@@ -16,7 +16,7 @@ public class FieldController {
 		return "fa/manage";
 	}
 
-	public void getLocation(double x0, double y0, int radius) {
+	public void getRandomLocation(double x0, double y0, int radius) {
 		Random random = new Random();
 
 		// Convert radius from meters to degrees
