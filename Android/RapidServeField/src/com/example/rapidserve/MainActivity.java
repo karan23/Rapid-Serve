@@ -24,8 +24,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	protected ActionBar actionBar;// = getActionBar();
 	LocationListener mlocListener;
 	LocationManager mlocManager;
+	static MainActivity act ; 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		act = this ;
 		super.onCreate(savedInstanceState);
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		setContentView(R.layout.activity_main);
