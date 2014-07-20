@@ -82,7 +82,7 @@ public class ViewFragment extends Fragment {
 
 		ArrayList<Complaint> mArray = new ArrayList<Complaint>();
 
-		Complaint complaint = new Complaint();
+		
 		try {
 			mJArray = new JSONArray(result);
 		} catch (JSONException e) {
@@ -91,6 +91,7 @@ public class ViewFragment extends Fragment {
 		}
 		if (mJArray != null) {
 			for (int i = 0; i < mJArray.length(); i++) {
+				Complaint complaint = new Complaint();
 				try {
 					mJObj = mJArray.getJSONObject(i);
 					complaint.id = mJObj.getInt("id");
