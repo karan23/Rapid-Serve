@@ -41,10 +41,14 @@ public class ViewFragment extends Fragment {
 		array.add(complaint);
 		mListAdapter = new CustomListAdapter(mContext, array);
 		mListView.setAdapter(mListAdapter);
-		new HttpRequestTask().execute();
 		return rootView;
 	}
-
+@Override
+public void onResume() {
+	// TODO Auto-generated method stub
+	super.onResume();
+	new HttpRequestTask().execute();
+}
 	public class HttpRequestTask extends AsyncTask<Void, Void, String> {
 		ProgressDialog progressDialog = ProgressDialog.show(mContext,
 				"Connecting", "Please wait..");
