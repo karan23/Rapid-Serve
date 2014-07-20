@@ -69,7 +69,7 @@ public class RapidServeController {
 		Customer cust = customerRepository.findOne(custId);
 		List<Complaint> complaints = null;
 		complaints = complaintRepository.findByCustomer(cust);
-		
+
 		List<ComplaintPojo> result = getComplaintPojoFromComplaintObject(complaints);
 		return result;
 	}
@@ -134,31 +134,35 @@ public class RapidServeController {
 		double custLong = Double.parseDouble(customer11.getLongitude());
 		double custLat = Double.parseDouble(customer11.getLatitude());
 		Map<FieldAgent, Double> distanceMap = new HashMap<FieldAgent, Double>();
-		for(FieldAgent agent : fieldAgentRepository.findAll()){
-			
-			List<FieldAgentLocation> locs = fieldAgentLocationRepository.findByAgentOrderBySeenDesc(agent);
-			if(locs.size()>0){
-				double distance = getDistance(custLat, custLong, Double.parseDouble(locs.get(0).getLatitude()), Double.parseDouble(locs.get(0).getLongitude()));
+		for (FieldAgent agent : fieldAgentRepository.findAll()) {
+
+			List<FieldAgentLocation> locs = fieldAgentLocationRepository
+					.findByAgentOrderBySeenDesc(agent);
+			if (locs.size() > 0) {
+				double distance = getDistance(custLat, custLong,
+						Double.parseDouble(locs.get(0).getLatitude()),
+						Double.parseDouble(locs.get(0).getLongitude()));
 				distanceMap.put(agent, distance);
-				
+
 			}
-			
+
 			System.out.println(distanceMap);
 		}
 		FieldAgent assigned = null;
 		// find minimum first
 		double min = Integer.MAX_VALUE;
-		for(Entry<FieldAgent, Double> distance : distanceMap.entrySet()) {
-		    min = Math.min(min, distance.getValue());
+		for (Entry<FieldAgent, Double> distance : distanceMap.entrySet()) {
+			min = Math.min(min, distance.getValue());
 		}
-		for(Entry<FieldAgent, Double> distance : distanceMap.entrySet()) {
-		    if(distance.getValue() == min) {
-		    	assigned = distance.getKey();
-		    }
+		for (Entry<FieldAgent, Double> distance : distanceMap.entrySet()) {
+			if (distance.getValue() == min) {
+				assigned = distance.getKey();
+			}
 		}
-		if(assigned!=null){
+		if (assigned != null) {
 			System.out.println(assigned);
 			compSaved.setAgent(assigned);
+			compSaved.setStatus(Constants.COMP_INPROGRESS);
 			complaintRepository.save(compSaved);
 		}
 		return complaintRepository.findAll();
@@ -181,15 +185,18 @@ public class RapidServeController {
 	}
 
 	@RequestMapping(value = "/complaintAssignToAgent", method = RequestMethod.POST, produces = "application/json")
-	public @ResponseBody Map<String, String> complaintAssignToAgent(@RequestParam Map<String, String> params, ModelMap model) {
+	public @ResponseBody Map<String, String> complaintAssignToAgent(
+			@RequestParam Map<String, String> params, ModelMap model) {
 		String complaintId = params.get("complaintId");
 		String agentId = params.get("agentId");
 		Map<String, String> result = new HashMap<String, String>();
-		FieldAgent agent = fieldAgentRepository.findOne(Long.parseLong(agentId));
-		if(agent.equals(null)) {
+		FieldAgent agent = fieldAgentRepository
+				.findOne(Long.parseLong(agentId));
+		if (agent.equals(null)) {
 			result.put("result", "Sorry Agent Not found!");
 		} else {
-			Complaint complaint = complaintRepository.findOne(Long.parseLong(complaintId));
+			Complaint complaint = complaintRepository.findOne(Long
+					.parseLong(complaintId));
 			complaint.setAgent(agent);
 			complaint.setStatus(Constants.COMP_INPROGRESS);
 			complaintRepository.save(complaint);
@@ -200,20 +207,23 @@ public class RapidServeController {
 	}
 
 	@RequestMapping(value = "/complaintResolvedByAgent", method = RequestMethod.POST, produces = "application/json")
-	public @ResponseBody Map<String, String> complaintResolvedByAgent(@RequestParam Map<String, String> params, ModelMap model) {
+	public @ResponseBody Map<String, String> complaintResolvedByAgent(
+			@RequestParam Map<String, String> params, ModelMap model) {
 		String complaintId = params.get("complaintId");
 		String agentId = params.get("agentId");
 		String satisfiedText = params.get("satisfiedText");
 		Map<String, String> result = new HashMap<String, String>();
-		FieldAgent agent = fieldAgentRepository.findOne(Long.parseLong(agentId));
-		if(!agent.equals(null)) {
-			Complaint complaint = complaintRepository.findOne(Long.parseLong(complaintId));
-			if(!complaint.getStatus().equals(Constants.COMP_INPROGRESS)) {
-				//TODO
+		FieldAgent agent = fieldAgentRepository
+				.findOne(Long.parseLong(agentId));
+		if (!agent.equals(null)) {
+			Complaint complaint = complaintRepository.findOne(Long
+					.parseLong(complaintId));
+			if (!complaint.getStatus().equals(Constants.COMP_INPROGRESS)) {
+				// TODO
 			}
 			complaint.setAgent(agent);
 			complaint.setStatus(Constants.COMP_COMPLETE);
-			if(satisfiedText.equals(complaint.getSatisfiedText())) {
+			if (satisfiedText.equals(complaint.getSatisfiedText())) {
 				complaint.setSatisfied(Constants.ST_YES);
 			} else {
 				complaint.setSatisfied(Constants.ST_YES);
@@ -227,44 +237,59 @@ public class RapidServeController {
 	}
 
 	@RequestMapping(value = "/findAgentStatistics", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody List<FieldAgentLocation> findAgentStatistics(
+	public @ResponseBody Map<String, String> findAgentStatistics(
 			@RequestParam Map<String, String> params, ModelMap model) {
 		String agentId = params.get("agentId");
-		return fieldAgentLocationRepository.findAllById(Long.parseLong(agentId));
+		FieldAgent agent = fieldAgentRepository
+				.findOne(Long.parseLong(agentId));
+		Map<String, String> complaints = new HashMap<String, String>();
+		int inprogressComplaints = complaintRepository.findByAgentAndStatus(
+				agent, Constants.COMP_INPROGRESS).size();
+		complaints.put("inprogressComplaints",
+				Integer.toString(inprogressComplaints));
+		int completeComplaints = complaintRepository.findByAgentAndStatus(
+				agent, Constants.COMP_COMPLETE).size();
+		complaints.put("completeComplaints",
+				Integer.toString(completeComplaints));
+
+		return complaints;
 	}
-	
-	public List<ComplaintPojo> getComplaintPojoFromComplaintObject(List<Complaint> complaints) {
+
+	public List<ComplaintPojo> getComplaintPojoFromComplaintObject(
+			List<Complaint> complaints) {
 		List<ComplaintPojo> result = new ArrayList<ComplaintPojo>();
 		for (Complaint complaint : complaints) {
 			ComplaintPojo cPojo = new ComplaintPojo();
 			Customer customer = customerRepository.findOne(complaint
 					.getCustomer().getId());
-			/*if(!complaint.getAgent().equals(null)) {
-				FieldAgent fieldAgent = fieldAgentRepository.findOne(complaint
-						.getAgent().getId());
-				fieldAgent.setComplaints(null);
-				cPojo.setFieldAgent(fieldAgent);
-			}*/
+			/*
+			 * if(!complaint.getAgent().equals(null)) { FieldAgent fieldAgent =
+			 * fieldAgentRepository.findOne(complaint .getAgent().getId());
+			 * fieldAgent.setComplaints(null); cPojo.setFieldAgent(fieldAgent);
+			 * }
+			 */
 			cPojo.setComplaint(complaint);
 			customer.setComplaints(null);
-			//cPojo.setCustomer(customer);
+			cPojo.setCustomer(customer);
 			result.add(cPojo);
 		}
 		return result;
 	}
-	public static double rad(double x) {
-		  return x * Math.PI / 180;
-		}
 
-		public static double getDistance(double p1lat, double p1long, double p2lat, double p2long) {
-			double R = 6378137; // Earth’s mean radius in meter
-			double dLat = rad(p2lat - p1lat);
-			double dLong = rad(p2long - p1long);
-			double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-		    Math.cos(rad(p1lat)) * Math.cos(rad(p2lat)) *
-		    Math.sin(dLong / 2) * Math.sin(dLong / 2);
-		  double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-		  double d = R * c;
-		  return d; // returns the distance in meter
-		};
+	public static double rad(double x) {
+		return x * Math.PI / 180;
+	}
+
+	public static double getDistance(double p1lat, double p1long, double p2lat,
+			double p2long) {
+		double R = 6378137; // Earth’s mean radius in meter
+		double dLat = rad(p2lat - p1lat);
+		double dLong = rad(p2long - p1long);
+		double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+				+ Math.cos(rad(p1lat)) * Math.cos(rad(p2lat))
+				* Math.sin(dLong / 2) * Math.sin(dLong / 2);
+		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+		double d = R * c;
+		return d; // returns the distance in meter
+	};
 }
