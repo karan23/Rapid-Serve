@@ -1,5 +1,6 @@
 package com.example.rapidserve;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -74,10 +75,19 @@ public class LoginActivity extends Activity {
 		protected void onPostExecute(String result) {
 			progressDialog.cancel();
 			Log.d("Tag", result);
+			
 			if(result == null || result.length() == 0) {
 				Utils.showToast(mContext, "Wrong credidentials!");
 			}
 			else {
+				try {
+					mJObj = new JSONObject(result);
+				String str = 	mJObj.getString("contactName");
+				Utils.setAppParam(mContext, "custName", str);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				Utils.setAppParam(mContext, "customerId", mCustomerId);
 				Utils.setAppParam(mContext, "customerPhone", mPhone);
 				Utils.setAppParam(mContext, "login", "true");
