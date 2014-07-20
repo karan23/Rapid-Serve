@@ -7,7 +7,7 @@ import android.widget.Toast;
 import com.rapidserve.user.R;
 
 public class Utils {
-	static final String WEB_URL = "http://192.168.1.242:8080/rapid-serve/endpoint/";
+	static final String WEB_URL = "http://192.168.1.138:8080/rapid-serve/endpoint/";
 
 	static void showToast(Context context, String msg) {
 		Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();

@@ -23,13 +23,13 @@ public class ComplaintActivity extends Activity {
 			textTextView.setText(extras.getString("text"));
 			satisfactionTextView.setText(extras.getString("code"));
 			String status = extras.getString("status");
-			if(status == "CMPLT") {
+			if(status.equalsIgnoreCase("CMPLT")) {
 				status = "Complete";
 			}
-			else if(status == "INPROG") {
+			else if(status.equalsIgnoreCase("INPROG")) {
 				status = "In Progress";
 			}
-			else if(status == "CRTD") {
+			else if(status.equalsIgnoreCase("CRTD")) {
 				status = "Created";
 			}
 			else {
