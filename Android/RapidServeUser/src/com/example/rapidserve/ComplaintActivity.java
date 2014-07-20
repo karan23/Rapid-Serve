@@ -13,14 +13,29 @@ public class ComplaintActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_complaint);
-		TextView typeTextView = (TextView) findViewById(R.id.complaintType_textView);
-		TextView textTextView = (TextView) findViewById(R.id.complaintText_textView);
-		TextView statusTextView = (TextView) findViewById(R.id.complaintStatus_textView);
+		TextView typeTextView = (TextView) findViewById(R.id.complaintType);
+		TextView textTextView = (TextView) findViewById(R.id.complaintText);
+		TextView statusTextView = (TextView) findViewById(R.id.complaintStatus);
+		TextView satisfactionTextView = (TextView) findViewById(R.id.complaintSatisfied);		
 		Bundle extras = getIntent().getExtras();
 		if(extras != null) {
 			typeTextView.setText(extras.getString("type"));
 			textTextView.setText(extras.getString("text"));
-			statusTextView.setText(extras.getString("status"));
+			satisfactionTextView.setText(extras.getString("code"));
+			String status = extras.getString("status");
+			if(status == "CMPLT") {
+				status = "Complete";
+			}
+			else if(status == "INPROG") {
+				status = "In Progress";
+			}
+			else if(status == "CRTD") {
+				status = "Created";
+			}
+			else {
+				status = "In Progress";
+			}
+			statusTextView.setText(status);
 		}
 	}
 
