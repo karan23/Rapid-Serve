@@ -262,12 +262,14 @@ public class RapidServeController {
 			ComplaintPojo cPojo = new ComplaintPojo();
 			Customer customer = customerRepository.findOne(complaint
 					.getCustomer().getId());
-			/*
-			 * if(!complaint.getAgent().equals(null)) { FieldAgent fieldAgent =
-			 * fieldAgentRepository.findOne(complaint .getAgent().getId());
-			 * fieldAgent.setComplaints(null); cPojo.setFieldAgent(fieldAgent);
-			 * }
-			 */
+			
+			if (complaint.getAgent() != null) {
+				FieldAgent fieldAgent = fieldAgentRepository.findOne(complaint
+						.getAgent().getId());
+				fieldAgent.setComplaints(null);
+				cPojo.setFieldAgent(fieldAgent);
+			}
+ 
 			cPojo.setComplaint(complaint);
 			customer.setComplaints(null);
 			cPojo.setCustomer(customer);
