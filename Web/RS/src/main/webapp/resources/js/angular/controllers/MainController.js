@@ -14,7 +14,7 @@ var MainCtrl = function($scope, toaster, $location, AppServices, $filter,
 	$scope.custList = {};
 	$scope.complaintList =[];
 	$scope.complaint = {};
-	
+	$scope.noLocation = false;
 	
 	$scope.getCustomers = function() {
 		$http.get("crud/getAllCustomers").success(
@@ -93,7 +93,11 @@ var MainCtrl = function($scope, toaster, $location, AppServices, $filter,
 	$scope.getNearBy = function(id){
 		$http.get("crud/getNearByFA/"+id).success(
 				function(data, status, headers, config) {
+					if(data.length == 0 ){
+						$scope.noLocation = true;
+					}
 					$scope.location = data;
+					
 					markers = [];
 					markers[0] = ['Field Agent', data[0].latitude, data[0].longitude];
 				}).error(function(data, status, headers, config) {

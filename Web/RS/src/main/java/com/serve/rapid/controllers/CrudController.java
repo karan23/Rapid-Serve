@@ -90,6 +90,7 @@ public class CrudController {
 		complaint.setSatisfiedText(Integer.toString(gen()));
 		Complaint compSaved = complaintRepository.save(complaint);
 		Customer customer = compSaved.getCustomer();
+		if(customer!=null){
 		double custLong = Double.parseDouble(customer.getLongitude());
 		double custLat = Double.parseDouble(customer.getLatitude());
 		Map<FieldAgent, Double> distanceMap = new HashMap<FieldAgent, Double>();
@@ -120,6 +121,7 @@ public class CrudController {
 			compSaved.setAgent(assigned);
 			complaintRepository.save(compSaved);
 		}
+	}
 		return complaintRepository.findAll();
 	}
 
