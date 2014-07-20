@@ -1,11 +1,11 @@
 package com.example.rapidserve;
 
 
-import android.app.ActionBar.Tab;
+import com.example.rapidserve.R;
 import android.app.ActionBar;
+import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;

@@ -5,10 +5,13 @@
     <color name="button_normal">#D86C70</color> <!-- #ABABAB -->
     <color name="button_pressed">#DDB0A0</color> <!-- #d1d6da -->
     <color name="button_image_pressed">#c1dc6e</color> <!-- #a1e86d -->
+    <color name="cards_listview_background">#eaeff9</color>
 
-    <color name="red">#ff0404</color>
+    <!--
+     <color name="red">#ff0404</color>
     <color name="green">#0cff00</color>
     <color name="blue">#0030ff</color>
     <color name="black">#000000</color>
+    -->
 
 </resources>
