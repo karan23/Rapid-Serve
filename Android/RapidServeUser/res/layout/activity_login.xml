@@ -20,12 +20,19 @@
         android:text="@string/title_activity_login"
         android:textSize="50sp" />
 
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/login_user" />
+
     <EditText
         android:id="@+id/customerIdText"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="30dp"
         android:ems="10"
         android:hint="Customer ID" />
 
