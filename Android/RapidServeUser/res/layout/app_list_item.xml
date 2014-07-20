@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:orientation="vertical"
-    android:background="@drawable/activity_background" >
+    android:background="@drawable/card"
+    android:layout_margin ="5dp" >
 
     <TextView
         android:id="@+id/comaplaintTitile"
@@ -11,7 +12,8 @@
         android:layout_height="wrap_content"
         android:text="Complaint Title"
         android:textStyle="bold"
-        android:textSize="20sp" />
+        android:textSize="20sp" 
+        android:layout_margin ="8dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +24,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Status:"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:layout_margin ="8dp"
+             />
 
         <TextView
             android:id="@+id/textView2"
@@ -30,7 +34,9 @@
             android:layout_height="wrap_content"
             android:text="pending"
             android:textSize="16sp"
-            android:textStyle="italic" />
+            android:textStyle="italic"
+            android:layout_margin ="8dp"
+             />
 
     </LinearLayout>
 

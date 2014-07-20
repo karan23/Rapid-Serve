@@ -9,7 +9,8 @@
         android:id="@+id/formSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp" />
+        android:layout_margin="5dp"
+        android:layout_marginTop="10dp" />
 
     <EditText
         android:id="@+id/editText1"
@@ -17,7 +18,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:ems="10"
-        android:hint="Add complaint here" >
+        android:hint="Add complaint title" >
+        <requestFocus />
     </EditText>
 
     <EditText
@@ -26,18 +28,20 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:ems="10"
-        android:hint="Add complaint title" >
+        android:hint="Add complaint here" >
 
-        <requestFocus />
+        
     </EditText>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        
         android:gravity="center"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:text="Submit" />
+        android:text="Submit"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button_main" />
 
 </LinearLayout>
