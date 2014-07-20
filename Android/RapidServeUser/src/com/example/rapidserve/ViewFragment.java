@@ -105,6 +105,7 @@ public class ViewFragment extends Fragment {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		mComplaintList.clear();
 		if (mJArray != null) {
 			for (int i = 0; i < mJArray.length(); i++) {
 				Complaint complaint = new Complaint();

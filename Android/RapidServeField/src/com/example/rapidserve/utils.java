@@ -11,7 +11,7 @@ import android.telephony.TelephonyManager;
 
 public class utils {
 
-	final static String APP_URL =  "http://192.168.1.242:8080/rapid-serve/endpoint/";
+	final static String APP_URL =  "http://192.168.1.138:8080/rapid-serve/endpoint/";
 	
 	public static boolean isLogged(Context context) {
 		
