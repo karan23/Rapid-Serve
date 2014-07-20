@@ -37,6 +37,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 600000, 500, mlocListener);
 		// Set up the action bar.
 		actionBar = getActionBar();
+		actionBar.setTitle(utils.getAppParam(this, "nameFeildAgent"));
 		// Specify that the Home/Up button should not be enabled, since there is
 		// no hierarchical
 		// parent.

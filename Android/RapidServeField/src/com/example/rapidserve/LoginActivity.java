@@ -111,7 +111,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 				Intent intent;
 				intent = new Intent(LoginActivity.this, MainActivity.class);
 				startActivity(intent);
-				overridePendingTransition(R.anim.activity_open_translate,R.anim.activity_close_scale);
 				finish();
 			}
 
