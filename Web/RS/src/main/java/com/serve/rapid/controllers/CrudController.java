@@ -1,12 +1,13 @@
 package com.serve.rapid.controllers;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.serve.rapid.Constants;
@@ -135,10 +135,20 @@ public class CrudController {
 	}
 	
 	@RequestMapping(value = "/getNearByFA/{id}", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody Iterable<Customer> getNearByFA(@PathVariable String id) {
+	public @ResponseBody List<FieldAgentLocation> getNearByFA(@PathVariable String id) {
 		System.out.println(id);
-		
-		return customerRepository.findAll();
+		List<FieldAgentLocation> locs = null;
+		Complaint complaint = complaintRepository.findOne(Long.parseLong(id));
+		if(complaint.getAgent()!=null){
+		locs = (List<FieldAgentLocation>) complaint.getAgent().getLocations();
+		Collections.sort(locs, new Comparator<FieldAgentLocation>() {
+		    public int compare(FieldAgentLocation m1, FieldAgentLocation m2) {
+		        return m2.getSeen().compareTo(m1.getSeen());
+		    }
+		});
+		}
+	
+		return locs;
 	}
 	
 	

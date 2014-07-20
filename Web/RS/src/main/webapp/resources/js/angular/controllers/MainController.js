@@ -93,7 +93,9 @@ var MainCtrl = function($scope, toaster, $location, AppServices, $filter,
 	$scope.getNearBy = function(id){
 		$http.get("crud/getNearByFA/"+id).success(
 				function(data, status, headers, config) {
-					//$scope.complaintList = data;
+					$scope.location = data;
+					markers = [];
+					markers[0] = ['Field Agent', data[0].latitude, data[0].longitude];
 				}).error(function(data, status, headers, config) {
 			toaster.pop('error', "error", "Some error in Fetching Customers.");
 		});
