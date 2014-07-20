@@ -12,7 +12,7 @@
         android:layout_margin="5dp" />
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/AddComplaint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -20,18 +20,10 @@
         android:hint="Add complaint here" >
     </EditText>
 
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:ems="10"
-        android:hint="Add complaint title" >
-
-        <requestFocus />
-    </EditText>
+    
 
     <Button
+        android:id="@+id/submitBtnFB"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
