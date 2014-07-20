@@ -9,40 +9,54 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/selector_card_background"
         android:orientation="vertical"
-        android:padding="5dp"
-        android:background="@drawable/selector_card_background" >
-
-        <TextView
-            android:id="@+id/comaplaintTitile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="Complaint Title"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+        android:padding="5dp" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/comaplaintTitile"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:layout_weight="7"
+                android:text="Complaint Title"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_margin="5dp"
+                android:layout_weight="1.9"
                 android:text="Status:"
                 android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/complaintStatus"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
                 android:layout_margin="5dp"
+                android:layout_weight="2.1"
                 android:text="pending"
-                android:textSize="16sp"
+                android:textSize="15sp"
                 android:textStyle="italic" />
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/shortDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:fontFamily="sans-serif-light"
+            android:maxLines="2"
+            android:text="Medium Text"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
     </LinearLayout>
 
 </LinearLayout>

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.UUID;
 
@@ -87,7 +88,38 @@ public class CrudController {
 		complaint.setComplaintTime(creationTime);
 		complaint.setStatus(Constants.COMP_CREATED);
 		complaint.setSatisfiedText(Integer.toString(gen()));
-		complaintRepository.save(complaint);
+		Complaint compSaved = complaintRepository.save(complaint);
+		Customer customer = compSaved.getCustomer();
+		double custLong = Double.parseDouble(customer.getLongitude());
+		double custLat = Double.parseDouble(customer.getLatitude());
+		Map<FieldAgent, Double> distanceMap = new HashMap<FieldAgent, Double>();
+		for(FieldAgent agent : fieldAgentRepository.findAll()){
+			
+			List<FieldAgentLocation> locs = fieldAgentLocationRepository.findByAgentOrderBySeenDesc(agent);
+			if(locs.size()>0){
+				double distance = getDistance(custLat, custLong, Double.parseDouble(locs.get(0).getLatitude()), Double.parseDouble(locs.get(0).getLongitude()));
+				distanceMap.put(agent, distance);
+				
+			}
+			
+			System.out.println(distanceMap);
+		}
+		FieldAgent assigned = null;
+		// find minimum first
+		double min = Integer.MAX_VALUE;
+		for(Entry<FieldAgent, Double> distance : distanceMap.entrySet()) {
+		    min = Math.min(min, distance.getValue());
+		}
+		for(Entry<FieldAgent, Double> distance : distanceMap.entrySet()) {
+		    if(distance.getValue() == min) {
+		    	assigned = distance.getKey();
+		    }
+		}
+		if(assigned!=null){
+			System.out.println(assigned);
+			compSaved.setAgent(assigned);
+			complaintRepository.save(compSaved);
+		}
 		return complaintRepository.findAll();
 	}
 
@@ -105,22 +137,7 @@ public class CrudController {
 	@RequestMapping(value = "/getNearByFA/{id}", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody Iterable<Customer> getNearByFA(@PathVariable String id) {
 		System.out.println(id);
-		Complaint complaint = complaintRepository.findOne(Long.parseLong(id));
-		Customer customer = complaint.getCustomer();
-		double custLong = Double.parseDouble(customer.getLongitude());
-		double custLat = Double.parseDouble(customer.getLatitude());
-		Map<FieldAgent, Double> distanceMap = new HashMap<FieldAgent, Double>();
-		for(FieldAgent agent : fieldAgentRepository.findAll()){
-			
-			List<FieldAgentLocation> locs = fieldAgentLocationRepository.findByAgentOrderBySeenDesc(agent);
-			if(locs.size()>0){
-				double distance = getDistance(custLat, custLong, Double.parseDouble(locs.get(0).getLatitude()), Double.parseDouble(locs.get(0).getLongitude()));
-				distanceMap.put(agent, distance);
-				
-			}
-			
-			System.out.println(distanceMap);
-		}
+		
 		return customerRepository.findAll();
 	}
 	

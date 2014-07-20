@@ -55,9 +55,11 @@ public class CustomListAdapter extends BaseAdapter {
 				.findViewById(R.id.comaplaintTitile);
 		TextView txtStatus = (TextView) convertView
 				.findViewById(R.id.complaintStatus);
-
+		TextView txtDesc = (TextView) convertView
+				.findViewById(R.id.shortDesc);
 		txtTitle.setText(mComplaintList.get(position).complaintType);
 		txtStatus.setText(mComplaintList.get(position).status);
+		txtDesc.setText(mComplaintList.get(position).complaintText);
 		return convertView;
 	}
 

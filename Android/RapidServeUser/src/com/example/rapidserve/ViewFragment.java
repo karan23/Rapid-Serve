@@ -1,7 +1,6 @@
 package com.example.rapidserve;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -9,13 +8,15 @@ import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.example.rapidserve.RestClient.RequestMethod;
@@ -27,6 +28,7 @@ public class ViewFragment extends Fragment {
 	private JSONObject mJObj;
 	private ListView mListView;
 	private CustomListAdapter mListAdapter;
+	private ArrayList<Complaint> mComplaintList;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,6 +43,17 @@ public class ViewFragment extends Fragment {
 		array.add(complaint);
 		mListAdapter = new CustomListAdapter(mContext, array);
 		mListView.setAdapter(mListAdapter);
+		mListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position,
+					long id) {
+				Intent intent = new Intent(mContext, ComplaintActivity.class);
+				intent.putExtra("type", mComplaintList.get(position).complaintType);
+				intent.putExtra("text", mComplaintList.get(position).complaintText);
+				intent.putExtra("status", mComplaintList.get(position).status);
+				startActivity(intent);
+			}});
 		return rootView;
 	}
 @Override
@@ -50,13 +63,11 @@ public void onResume() {
 	new HttpRequestTask().execute();
 }
 	public class HttpRequestTask extends AsyncTask<Void, Void, String> {
-		ProgressDialog progressDialog = ProgressDialog.show(mContext,
-				"Connecting", "Please wait..");
-
+		
 		@Override
 		protected String doInBackground(Void... params) {
 			String loginUrl = Utils.WEB_URL + "getAllComplaintByUserId/"
-					+ Utils.getAppParam(mContext, "customerId") + "/opened";
+					+ Utils.getAppParam(mContext, "customerId");
 			RestClient httpClient = new RestClient(loginUrl);
 			try {
 				httpClient.Execute(RequestMethod.GET);
@@ -68,14 +79,13 @@ public void onResume() {
 		}
 
 		protected void onPreExecute() {
-			progressDialog.show();
+			
 		}
 
 		protected void onPostExecute(String result) {
-			progressDialog.cancel();
 			if ((result != null) && (result.length() > 0)) {
 
-				ArrayList<Complaint> mComplaintList = parseJson(result);
+				mComplaintList = parseJson(result);
 				mListAdapter.setList(mComplaintList);
 				mListAdapter.notifyDataSetChanged();
 			}
@@ -98,6 +108,7 @@ public void onResume() {
 				Complaint complaint = new Complaint();
 				try {
 					mJObj = mJArray.getJSONObject(i);
+					mJObj = mJObj.getJSONObject("complaint");
 					complaint.id = mJObj.getInt("id");
 					complaint.complaintText = mJObj.getString("complaintText");
 					complaint.complaintType = mJObj.getString("complaintType");
