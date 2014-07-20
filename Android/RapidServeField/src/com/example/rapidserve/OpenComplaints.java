@@ -66,8 +66,11 @@ public class OpenComplaints extends android.support.v4.app.Fragment {
 				i.putExtra("currentlatlng", currLatLng);
 				i.putExtra("latlng", complaint.latlng);		
 				i.putExtra("id", complaint.id);
+				
                 startActivity(i);
+                
 			}
+			
 		});
 		return rootView;
 	}

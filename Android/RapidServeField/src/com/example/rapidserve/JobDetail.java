@@ -18,6 +18,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.os.Build;
@@ -25,7 +26,7 @@ import android.os.Build;
 public class JobDetail extends Activity {
 
 	TextView custName, custAdd, compType, compDesc;
-	Button call, direction, reslove;
+	ImageButton call, direction, reslove;
 	EditText satisfectionCode;
 
 	@Override
@@ -36,10 +37,10 @@ public class JobDetail extends Activity {
 		custAdd = (TextView) findViewById(R.id.custAdd);
 		compType = (TextView) findViewById(R.id.comptype);
 		compDesc = (TextView) findViewById(R.id.compDesc);
-		call = (Button) findViewById(R.id.call);
-		direction = (Button) findViewById(R.id.getdir);
-		reslove = (Button) findViewById(R.id.reslove);
-		satisfectionCode = (EditText) findViewById(R.id.satisCode);
+		call = (ImageButton) findViewById(R.id.call);
+		direction = (ImageButton) findViewById(R.id.getdir);
+		reslove = (ImageButton) findViewById(R.id.reslove);
+		satisfectionCode = (EditText) findViewById(R.id.satisCodes);
 		custName.setText(getIntent().getStringExtra("name"));
 		custAdd.setText(getIntent().getStringExtra("add"));
 		compType.setText(getIntent().getStringExtra("type"));
