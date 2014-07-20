@@ -21,6 +21,7 @@ import com.serve.rapid.data.custom.ComplaintPojo;
 import com.serve.rapid.domain.Complaint;
 import com.serve.rapid.domain.Customer;
 import com.serve.rapid.domain.FieldAgent;
+import com.serve.rapid.domain.FieldAgentLocation;
 import com.serve.rapid.repository.CommentRepository;
 import com.serve.rapid.repository.ComplaintRepository;
 import com.serve.rapid.repository.CustomerRepository;
@@ -58,12 +59,25 @@ public class RapidServeController {
 		return customer;
 	}
 
-	@RequestMapping(value = "/getAllComplaintByUserId/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/getAllComplaintByUserId/{id}/{status}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<Complaint> getAllComplaintByUserId(@PathVariable String id,
-			ModelMap model) {
+			@PathVariable String status, ModelMap model) {
 		long custId = Long.parseLong(id);
 		Customer cust = customerRepository.findOne(custId);
-		return complaintRepository.findByCustomer(cust);
+		List<Complaint> complaints = null;
+		if(!status.equals("")) {
+			if(status.equals("opened")) {
+				status = Constants.COMP_INPROGRESS;
+			} else if(status.equals("closed")) {
+				status = Constants.COMP_COMPLETE;
+			} else {
+				return null;
+			}
+			complaints = complaintRepository.findByCustomerAndStatus(cust, status);
+		} else {
+			complaints = complaintRepository.findByCustomer(cust);
+		}
+		return complaints;
 	}
 
 	@RequestMapping(value = "/findAgentById", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -78,12 +92,25 @@ public class RapidServeController {
 		return customer;
 	}
 
-	@RequestMapping(value = "/getAllComplaintByAgentId/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/getAllComplaintByAgentId/{id}/{status}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<ComplaintPojo> getAllComplaintByAgentId(@PathVariable String id,
-			ModelMap model) {
+			@PathVariable String status, ModelMap model) {
 		long custId = Long.parseLong(id);
 		FieldAgent cust = fieldAgentRepository.findOne(custId);
-		List<Complaint> complaints = complaintRepository.findByAgent(cust);
+		List<Complaint> complaints = null;
+		if(!status.equals("")) {
+			if(status.equals("opened")) {
+				status = Constants.COMP_INPROGRESS;
+			} else if(status.equals("closed")) {
+				status = Constants.COMP_COMPLETE;
+			} else {
+				return null;
+			}
+			complaints = complaintRepository.findByAgentAndStatus(cust, status);
+		} else {
+			complaints = complaintRepository.findByAgent(cust);
+		}
+		
 		List<ComplaintPojo> result = new ArrayList<ComplaintPojo>();
 		for (Complaint complaint : complaints) {
 			ComplaintPojo cPojo = new ComplaintPojo();
@@ -117,6 +144,21 @@ public class RapidServeController {
 		
 		complaintRepository.save(complaint);
 		return complaintRepository.findAll();
+	}
+
+	@RequestMapping(value = "/addFieldAgentLocation", method = RequestMethod.POST, produces = "application/json")
+		public @ResponseBody void addFieldAgentLocation(@RequestParam Map<String, String> params,
+				ModelMap model) {
+		String latitude = params.get("latitude");
+		String longitude = params.get("longitude");
+		String agentId = params.get("agentId");
+		FieldAgentLocation location = new FieldAgentLocation();
+		location.setLatitude(latitude);
+		location.setLongitude(longitude);
+		FieldAgent agent = fieldAgentRepository.findOne(Long.parseLong(agentId));
+		location.setAgent(agent);
+		location.setSeen(new Date());
+		fieldAgentLocationRepository.save(location);
 	}
 	
 }
