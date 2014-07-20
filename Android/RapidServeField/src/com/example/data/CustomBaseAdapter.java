@@ -24,8 +24,7 @@ public class CustomBaseAdapter extends BaseAdapter {
 	Context context;
 	ArrayList<Complaints> list;
 
-	public CustomBaseAdapter(Context context, ArrayList<Complaints> list,
-			int caseNo, int size) {
+	public CustomBaseAdapter(Context context, ArrayList<Complaints> list) {
 
 		this.context = context;
 		this.list = list;
@@ -35,21 +34,13 @@ public class CustomBaseAdapter extends BaseAdapter {
 	@Override
 	public int getCount() {
 
-		return list.size();
+ 		return list.size();
 	}
 
-	@Override
-	public Object getItem(int pos) {
 
-		return list.get(pos);
+	public void setList(ArrayList<Complaints> list){
+		this.list = list ;
 	}
-
-	@Override
-	public long getItemId(int pos) {
-
-		return list.indexOf(getItem(pos));
-	}
-
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -59,7 +50,27 @@ public class CustomBaseAdapter extends BaseAdapter {
 			convertView = mInflater.inflate(R.layout.opencomplaintslistrow, null);
 		}
 
+		TextView contentType = (TextView) convertView.findViewById(R.id.complaintType);
+		TextView contentDetail = (TextView) convertView.findViewById(R.id.detail);
+		TextView contentDistance = (TextView) convertView.findViewById(R.id.distanceText);
+		
+		Complaints complaint = list.get(position);
+		contentType.setText(complaint.type);
+		contentDetail.setText(complaint.detail);
+		contentDistance.setText(Math.round(complaint.distance/1000) + " Km");
 		return convertView;
+	}
+
+	@Override
+	public Object getItem(int arg0) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public long getItemId(int position) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 

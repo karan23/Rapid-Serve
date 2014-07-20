@@ -24,8 +24,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	protected ActionBar actionBar;// = getActionBar();
 	LocationListener mlocListener;
 	LocationManager mlocManager;
+	static MainActivity act ; 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		act = this ;
 		super.onCreate(savedInstanceState);
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		setContentView(R.layout.activity_main);
@@ -35,7 +37,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 600000, 500, mlocListener);
 		// Set up the action bar.
 		actionBar = getActionBar();
-
 		// Specify that the Home/Up button should not be enabled, since there is
 		// no hierarchical
 		// parent.

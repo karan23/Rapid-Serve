@@ -11,5 +11,5 @@ public String userName;
 public String Adress ;
 public LatLng latlng ;
 public long phoneNumber ;
-
+public long distance ;
 }
