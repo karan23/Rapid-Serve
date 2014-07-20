@@ -129,7 +129,7 @@
         android:layout_weight="1"
         android:text="Direction"
         android:layout_margin="4.5dp"
-        android:background="@drawable/map" />
+        android:background="@drawable/maps" />
 
     <ImageButton 
         android:layout_width="wrap_content"
