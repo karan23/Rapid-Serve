@@ -14,4 +14,8 @@ public interface ComplaintRepository extends CrudRepository<Complaint, Long> {
 
 	List<Complaint> findByAgent(FieldAgent cust);
 
+	List<Complaint> findByAgentAndStatus(FieldAgent cust, String status);
+
+	List<Complaint> findByCustomerAndStatus(Customer cust, String status);
+
 }

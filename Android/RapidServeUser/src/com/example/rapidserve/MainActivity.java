@@ -88,8 +88,15 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 		@Override
 		public Fragment getItem(int position) {
-			// TODO Auto-generated method stub
-			Fragment fragment = new SubmitFragment();
+			Fragment fragment = null;
+			switch (position) {
+			case 0:
+				fragment = new SubmitFragment();
+				break;
+			case 1:
+				fragment = new ViewFragment();
+			
+			}
 			return fragment;
 		}
 

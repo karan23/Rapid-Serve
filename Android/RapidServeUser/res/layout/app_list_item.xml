@@ -18,14 +18,13 @@
         android:layout_height="wrap_content" >
 
         <TextView
-            android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Status:"
             android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/complaintStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="pending"
