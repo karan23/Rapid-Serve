@@ -26,7 +26,7 @@
                                             <div class="row pad">
                                                 <div class="col-sm-6">
                                                    
-                                                 
+                                           
 
                                                 </div>
                                                 <div class="col-sm-6 search-form">
@@ -44,14 +44,14 @@
                                                 <!-- THE MESSAGES -->
                                                 <table class="table table-mailbox">
                                                 	<tr>
-                                                		<th>Agent ID</th>
-                                                		<th>Name</th>
-                                                		<th>Contact No.</th>
+                                                		<th>Status</th>
+                                                		<th>Type</th>
+                                                		<th>Complaint</th>
                                                 	</tr>
-                                                    <tr ng-repeat="agent in agentList">
-                                                   		 <td class="name"><a href="">{{agent.faid}}</a></td>
-                                                       <td class="name"><a href="">{{agent.name}}</a></td>
-                                                        <td class="subject"><a href="tel:{{agent.contactNumber}}">{{agent.contactNumber}}</a></td>
+                                                    <tr ng-repeat="complaint in complaintList">
+                                                   		 <td class="name"><i class="fa fa-lg" ng-class="{CRTD:'fa-share',INPROG:'fa-recycle',CMPLT:'fa-thumbs-up'}[complaint.status]"></i> </td>
+                                                       <td class="name"><a href="">{{complaint.complaintType}}</a></td>
+                                                        <td class="subject"><a href="" data-toggle="modal" data-target="#assoccomplaint-modal" ng-click="getNearBy(complaint.id);">{{complaint.complaintText}}</a></td>
                                                        
                                                     </tr>
                                                     
@@ -68,3 +68,4 @@
                                 </div><!-- box-footer -->
                             </div><!-- /.box -->
                             <div ng-include="'resources/views/complaint/add-complaint.html'"></div>
+                            <div ng-include="'resources/views/complaint/associate-complaint.html'"></div>

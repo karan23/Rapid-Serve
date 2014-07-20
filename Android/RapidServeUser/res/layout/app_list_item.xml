@@ -1,36 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:orientation="vertical"
-    android:background="@drawable/activity_background" >
-
-    <TextView
-        android:id="@+id/comaplaintTitile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Complaint Title"
-        android:textStyle="bold"
-        android:textSize="20sp" />
+    android:layout_height="60dp"
+    android:layout_margin="10dp"
+    android:background="@color/cards_listview_background"
+    android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp"
+        android:background="@drawable/selector_card_background" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/comaplaintTitile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Status:"
-            android:textSize="15sp" />
+            android:layout_margin="5dp"
+            android:text="Complaint Title"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="pending"
-            android:textSize="16sp"
-            android:textStyle="italic" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Status:"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/complaintStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="pending"
+                android:textSize="16sp"
+                android:textStyle="italic" />
+        </LinearLayout>
 
     </LinearLayout>
 

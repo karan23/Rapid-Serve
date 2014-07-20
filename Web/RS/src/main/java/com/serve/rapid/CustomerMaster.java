@@ -1,21 +1,20 @@
 package com.serve.rapid;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.AbstractApplicationContext;
-
-import com.serve.rapid.domain.FieldAgent;
-import com.serve.rapid.repository.FieldAgentRepository;
 
 public class CustomerMaster {
 	public static void main(String[] args) {
-		AbstractApplicationContext context = new AnnotationConfigApplicationContext(
+/*		AbstractApplicationContext context = new AnnotationConfigApplicationContext(
 				BeanConfiguration.class);
 		FieldAgentRepository repo = context.getBean(FieldAgentRepository.class);
 		FieldAgent fa = new FieldAgent();
 		fa.setName("Test");
 		fa.setContactNumber("9999999");
 		fa.setType(Constants.UT_FIELDAGENT);
-		repo.save(fa);
+		repo.save(fa);*/
+		
+		
+		System.out.println(getDistance(28.589886 , 77.09242, 28.567487 , 77.133551));
+	
 		
 		/*CustomerRepository repository = context
 				.getBean(CustomerRepository.class);
@@ -39,14 +38,14 @@ public class CustomerMaster {
 		dCreator.getDiagnosticData();
 		List<String> classes = qrepository.findAvailableClasses();
 		System.out.println(classes);*/
-		String question = "What is another word for anticipate?";
+/*		String question = "What is another word for anticipate?";
 		int length = question.length();
 		int x = 25;
 		int y = 35;
 		String quesText = question.substring(0, x)+"!"+question.substring(x, length);
 		String nextques = quesText.substring(0, y+1)+"~"+quesText.substring(y+1, quesText.length());
 		String finalStr = nextques.replaceAll("!", "[b]");
-		finalStr = finalStr.replaceAll("~", "[/b]");
+		finalStr = finalStr.replaceAll("~", "[/b]");*/
 		
 /*	List<DataChapter> chapList = repository.findChaptersForClass();	
  * 
@@ -67,4 +66,21 @@ public class CustomerMaster {
 			}
 		}*/
 	}
+	
+	
+	public static double rad(double x) {
+		  return x * Math.PI / 180;
+		}
+
+		public static double getDistance(double p1lat, double p1long, double p2lat, double p2long) {
+			double R = 6378137; // Earth’s mean radius in meter
+			double dLat = rad(p2lat - p1lat);
+			double dLong = rad(p2long - p1long);
+			double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+		    Math.cos(rad(p1lat)) * Math.cos(rad(p2lat)) *
+		    Math.sin(dLong / 2) * Math.sin(dLong / 2);
+		  double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+		  double d = R * c;
+		  return d; // returns the distance in meter
+		};
 }

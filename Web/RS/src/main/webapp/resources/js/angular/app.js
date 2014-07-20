@@ -3,7 +3,7 @@
 var AngularSpringApp = {};
 
 var App = angular.module('AngularSpringApp', [ 'ngRoute', 'ngAnimate',
-		'toaster']);
+		'toaster','mgcrea.ngStrap']);
 
 //Declare app level module which depends on filters, and services
 App.config([ '$routeProvider', function($routeProvider) {

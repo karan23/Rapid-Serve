@@ -1,6 +1,8 @@
 package com.serve.rapid.controllers;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
@@ -8,6 +10,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -46,9 +49,10 @@ public class CrudController {
 	private CommentRepository commentRepository;
 
 	@RequestMapping(value = "/addCustomer", method = RequestMethod.POST, produces = "application/json")
-	public @ResponseBody Customer addCustomer(@RequestBody Customer customer,
+	public @ResponseBody Iterable<Customer> addCustomer(@RequestBody Customer customer,
 			ModelMap model) {
-		return customerRepository.save(customer);
+		 customerRepository.save(customer);
+		 return customerRepository.findAll();
 	}
 
 	@RequestMapping(value = "/addFieldAgent", method = RequestMethod.POST, produces = "application/json")
@@ -60,6 +64,11 @@ public class CrudController {
 		return fieldAgentRepository.findAll();
 	}
 
+	@RequestMapping(value = "/getAllComplaints", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody Iterable<Complaint> getAllComplaints() {
+		return complaintRepository.findAll();
+	}
+	
 	@RequestMapping(value = "/getAllFieldAgent", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody Iterable<FieldAgent> getAllFieldAgent() {
 		return fieldAgentRepository.findAll();
@@ -72,13 +81,14 @@ public class CrudController {
 	}
 
 	@RequestMapping(value = "/addComplaint", method = RequestMethod.POST, produces = "application/json")
-	public @ResponseBody Complaint addComplaint(
+	public @ResponseBody Iterable<Complaint> addComplaint(
 			@RequestBody Complaint complaint, ModelMap model) {
 		Date creationTime = new Date();
 		complaint.setComplaintTime(creationTime);
 		complaint.setStatus(Constants.COMP_CREATED);
 		complaint.setSatisfiedText(Integer.toString(gen()));
-		return complaintRepository.save(complaint);
+		complaintRepository.save(complaint);
+		return complaintRepository.findAll();
 	}
 
 	@RequestMapping(value = "/addComment", method = RequestMethod.POST, produces = "application/json")
@@ -86,7 +96,53 @@ public class CrudController {
 			ModelMap model) {
 		return commentRepository.save(comment);
 	}
+	
+	@RequestMapping(value = "/getAllCustomers", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody Iterable<Customer> getAllCustomers() {
+	return customerRepository.findAll();
+	}
+	
+	@RequestMapping(value = "/getNearByFA/{id}", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody Iterable<Customer> getNearByFA(@PathVariable String id) {
+		System.out.println(id);
+		Complaint complaint = complaintRepository.findOne(Long.parseLong(id));
+		Customer customer = complaint.getCustomer();
+		double custLong = Double.parseDouble(customer.getLongitude());
+		double custLat = Double.parseDouble(customer.getLatitude());
+		Map<FieldAgent, Double> distanceMap = new HashMap<FieldAgent, Double>();
+		for(FieldAgent agent : fieldAgentRepository.findAll()){
+			
+			List<FieldAgentLocation> locs = fieldAgentLocationRepository.findByAgentOrderBySeenDesc(agent);
+			if(locs.size()>0){
+				double distance = getDistance(custLat, custLong, Double.parseDouble(locs.get(0).getLatitude()), Double.parseDouble(locs.get(0).getLongitude()));
+				distanceMap.put(agent, distance);
+				
+			}
+			
+			System.out.println(distanceMap);
+		}
+		return customerRepository.findAll();
+	}
+	
+	
+	
+	public static double rad(double x) {
+		  return x * Math.PI / 180;
+		}
 
+		public static double getDistance(double p1lat, double p1long, double p2lat, double p2long) {
+			double R = 6378137; // Earth’s mean radius in meter
+			double dLat = rad(p2lat - p1lat);
+			double dLong = rad(p2long - p1long);
+			double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+		    Math.cos(rad(p1lat)) * Math.cos(rad(p2lat)) *
+		    Math.sin(dLong / 2) * Math.sin(dLong / 2);
+		  double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+		  double d = R * c;
+		  return d; // returns the distance in meter
+		};
+		
+		
 	public int gen() {
 		Random r = new Random(System.currentTimeMillis());
 		return 10000 + r.nextInt(20000);
