@@ -94,6 +94,7 @@ public class LoginActivity extends Activity {
 				Intent intent = new Intent(mContext, MainActivity.class);
 				mContext.startActivity(intent);	
 				overridePendingTransition(R.anim.activity_open_translate,R.anim.activity_close_scale);
+				finish();
 			}
 		}
 	}

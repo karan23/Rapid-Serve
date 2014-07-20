@@ -44,7 +44,8 @@
             android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name="com.example.rapidserve.JobDetail"
-            android:label="@string/title_activity_job_detail" >
+            android:label="@string/title_activity_job_detail"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 
