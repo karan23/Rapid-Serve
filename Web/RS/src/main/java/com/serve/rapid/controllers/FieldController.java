@@ -15,6 +15,11 @@ public class FieldController {
 	public String getRootPage(ModelMap modelMap) {
 		return "fa/manage";
 	}
+	
+	@RequestMapping("/track")
+	public String getTrackPage(ModelMap modelMap) {
+		return "fa/track";
+	}
 
 	public void getRandomLocation(double x0, double y0, int radius) {
 		Random random = new Random();

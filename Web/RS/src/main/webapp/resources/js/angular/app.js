@@ -15,6 +15,11 @@ App.config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.when('/fa/manage', {
 		templateUrl : 'fa/manage'
 	});
+
+	$routeProvider.when('/fa/track', {
+		templateUrl : 'fa/track'
+	});
+
 	
 	$routeProvider.when('/customer/manage', {
 		templateUrl : 'customer/manage'

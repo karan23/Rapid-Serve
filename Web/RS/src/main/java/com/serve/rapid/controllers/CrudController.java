@@ -119,6 +119,7 @@ public class CrudController {
 		if(assigned!=null){
 			System.out.println(assigned);
 			compSaved.setAgent(assigned);
+			compSaved.setStatus(Constants.COMP_INPROGRESS);
 			complaintRepository.save(compSaved);
 		}
 	}
